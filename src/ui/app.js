@@ -18,6 +18,7 @@ import { renderSupplyForm } from './screens/inventory/supplyForm.js';
 import { renderSupplyDetail } from './screens/inventory/supplyDetail.js';
 import { renderStockCountForm } from './screens/inventory/stockCountForm.js';
 import { renderExpenseForm } from './screens/expenses/expenseForm.js';
+import { renderSaleForm } from './screens/sales/saleForm.js';
 import { renderExpensesScreen } from './screens/expenses/expensesScreen.js';
 import { renderReportScreen } from './screens/report/reportScreen.js';
 import { renderPendingScreen, PENDING_TITLES } from './screens/pendingScreen.js';
@@ -25,7 +26,9 @@ import { renderPendingScreen, PENDING_TITLES } from './screens/pendingScreen.js'
 /** Pantalla de cada ruta: (contenedor, ruta, contexto). */
 const SCREENS = {
   orders: (c) => renderOrdersScreen(c),
-  sales: (c) => renderSalesScreen(c),
+  sales: (c, _r, ctx) => renderSalesScreen(c, {}, ctx),
+  saleNew: (c, _r, ctx) => renderSaleForm(c, {}, ctx),
+  saleEdit: (c, r, ctx) => renderSaleForm(c, { id: r.params.id }, ctx),
   inventoryProducts: (c, _r, ctx) => renderInventoryScreen(c, { tab: 'products' }, ctx),
   inventorySupplies: (c, _r, ctx) => renderInventoryScreen(c, { tab: 'supplies' }, ctx),
   productNew: (c, _r, ctx) => renderProductForm(c, {}, ctx),

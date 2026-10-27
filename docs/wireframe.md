@@ -4,7 +4,7 @@
 |---|---|
 | **Versión** | 1.3 (2026-10-26: mensaje de entrega por D-066; auditoría del paso 7, D-069 a D-082; D-083 y D-084) |
 | **Fecha** | 2026-10-26 |
-| **Fuentes** | `CLAUDE.md` §6 y §7 (D-014, D-046 a D-084) · `docs/requirements.md` v1.8 · `docs/data-contract.json` v1.2 |
+| **Fuentes** | `CLAUDE.md` §6 y §7 (D-014, D-046 a D-084) · `docs/requirements.md` v1.9 · `docs/data-contract.json` v1.2 |
 
 ### Convenciones
 
@@ -176,6 +176,8 @@
 - Si una línea no alcanza, **no se guarda nada** (D-031) y los datos ingresados se conservan.
 - Si se agrega un producto que ya está en la venta, se suma a su línea (D-069).
 - **Venta que viene de un pedido:** solo se puede cambiar la fecha; las líneas aparecen bloqueadas (D-072).
+- **Sin productos:** "Agrega al menos un producto" (D-106).
+- **Eliminar venta:** botón al final del formulario; "¿Eliminar la venta de ₡7 500,00 del 2 nov?" (D-107).
 
 ## 6. Inventario — Productos
 
@@ -360,6 +362,7 @@ Todos los errores aparecen **en rojo junto al campo o la acción**. Al fallar no
 | Gasto que deja un insumo en negativo (verificación defensiva; con las reglas actuales no ocurre) | "Solo hay X {unidad} de {insumo}" | REQ-F-11 |
 | Desactivar o eliminar un producto en pedidos pendientes | "{producto} está en pedidos pendientes" | REQ-F-02 |
 | Producción sin ninguna cantidad | "Ingresa al menos una cantidad" | REQ-F-03 |
+| Venta sin productos | "Agrega al menos un producto" | REQ-F-12 |
 | Entregar un pedido con faltantes | "Faltan X {producto} por producir para este pedido" (el pedido sigue Pendiente) | REQ-F-17 |
 | Fecha futura | "La fecha no puede ser futura" | REQ-F-23 |
 | Entrega en el pasado | "La entrega no puede estar en el pasado" | REQ-F-23 |

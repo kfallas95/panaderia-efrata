@@ -4,7 +4,7 @@
 |---|---|
 | **Versión** | 1.0 (aprobada por el autor el 2026-10-26) |
 | **Fecha** | 2026-10-26 |
-| **Fuentes** | `docs/requirements.md` v1.8 · `docs/design.md` v1.2 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 · `CLAUDE.md` · `system_prompt.md` |
+| **Fuentes** | `docs/requirements.md` v1.9 · `docs/design.md` v1.2 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 · `CLAUDE.md` · `system_prompt.md` |
 | **Verificación** | Manual, sin pruebas automatizadas (R5). Cada fase termina con su lista de verificación. |
 | **Ejecución** | Módulos ES nativos y Live Server, sin build (R4) |
 
@@ -192,13 +192,13 @@ Fecha simulada: `?today=2026-11-02&time=10:00`.
 
 ## Fase 6 — Insumos y gastos
 
-- [ ] **T-6.1** `supplyService`: crear y editar con unidad de lista fija (REQ-F-07, D-039); eliminar o desactivar (REQ-F-02); reactivar (REQ-F-25).
-- [ ] **T-6.2** `stockCountService`: conteo con `countedAt` y la cantidad anterior; admite 0; no se edita ni se elimina (REQ-F-08, D-024).
-- [ ] **T-6.3** `expenseService` (REQ-F-09 a REQ-F-11, D-040, D-041, D-075):
+- [x] **T-6.1** `supplyService`: crear y editar con unidad de lista fija (REQ-F-07, D-039); eliminar o desactivar (REQ-F-02); reactivar (REQ-F-25).
+- [x] **T-6.2** `stockCountService`: conteo con `countedAt` y la cantidad anterior; admite 0; no se edita ni se elimina (REQ-F-08, D-024).
+- [x] **T-6.3** `expenseService` (REQ-F-09 a REQ-F-11, D-040, D-041, D-075):
   - Insumos: descripción, insumo, cantidad, monto, fecha y hora (por defecto la actual).
   - Servicios: descripción y monto.
   - Editar y eliminar.
-- [ ] **T-6.4** Pestaña Insumos de `InventoryScreen` y `ExpensesScreen`, con chips y agrupación por día (D-047).
+- [x] **T-6.4** Pestaña Insumos de `InventoryScreen` y `ExpensesScreen`, con chips y agrupación por día (D-047).
 
 **Cubre:** REQ-F-02 y REQ-F-25 (insumos), REQ-F-07 a REQ-F-11.
 
@@ -249,6 +249,7 @@ Fecha simulada: `?today=2026-11-02&time=11:00`. Pan casero tiene existencia 18 (
 | Venta de 14 panes | "Solo hay 13 disponibles de Pan casero"; no se guarda nada y el formulario conserva los datos |
 | Editar la venta de 5 a 6 | Existencia 12; volver a 5 → existencia 13 |
 | Venta con fecha 3 nov | "La fecha no puede ser futura" |
+| Guardar una venta sin productos | "Agrega al menos un producto" |
 | Eliminar una venta de prueba | Las unidades vuelven a la existencia |
 
 Al cerrar la fase debe quedar **una** venta de 5 panes el 2 nov, con existencia 13.

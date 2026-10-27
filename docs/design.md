@@ -4,7 +4,7 @@
 |---|---|
 | **Versión** | 1.2 (2026-10-26: auditoría del paso 7, D-069 a D-082; D-083 y D-084) |
 | **Fecha** | 2026-10-26 |
-| **Fuentes** | `docs/propuesta.md` · `CLAUDE.md` · `docs/requirements.md` v1.8 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 |
+| **Fuentes** | `docs/propuesta.md` · `CLAUDE.md` · `docs/requirements.md` v1.9 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 |
 
 ### Convenciones de este documento
 
@@ -346,6 +346,7 @@ StockCount → stockCountService.create({supplyId, newQuantity})
 | Insumo negativo (defensiva, no se dispara) | REQ-F-11 | "Solo hay X {unidad} de {insumo}" |
 | Producto en pedidos pendientes | REQ-F-02 | "{producto} está en pedidos pendientes" |
 | Producción sin cantidades | REQ-F-03 | "Ingresa al menos una cantidad" |
+| Venta sin productos | REQ-F-12 | "Agrega al menos un producto" (D-106) |
 | Cambiar la unidad de un insumo con historial | REQ-F-07 | "La unidad no se puede cambiar porque el insumo ya tiene compras o conteos" (D-102) |
 | Entregar pedido con faltantes | REQ-F-17 | "Faltan X {producto} por producir para este pedido" |
 | Fecha futura / entrega pasada | REQ-F-23 | "La fecha no puede ser futura" / "La entrega no puede estar en el pasado" |
@@ -422,6 +423,7 @@ StockCount → stockCountService.create({supplyId, newQuantity})
 | D-097 | Ruta para editar producción |
 | D-098 | Las salidas se pueden eliminar |
 | D-102 | Unidad del insumo bloqueada con historial |
+| D-106 | Venta sin productos bloqueada |
 
 ## 11. Pendientes
 

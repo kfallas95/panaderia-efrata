@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Versión** | 1.8 (2026-10-26) — cambios: REQ-F-24 (D-044); REQ-F-25 y REQ-F-26 (D-048, D-049); REQ-F-06, REQ-F-15 y REQ-F-20 (D-050 a D-053); prioridad y entrega (D-063 a D-066); auditoría del paso 7 (D-069 a D-081), con REQ-F-27 y REQ-F-28 nuevos; mensaje de enteros y montos negativos (D-083, D-084); eliminar salidas (D-098); unidad bloqueada con historial (D-102) |
+| **Versión** | 1.9 (2026-10-26) — cambios: REQ-F-24 (D-044); REQ-F-25 y REQ-F-26 (D-048, D-049); REQ-F-06, REQ-F-15 y REQ-F-20 (D-050 a D-053); prioridad y entrega (D-063 a D-066); auditoría del paso 7 (D-069 a D-081), con REQ-F-27 y REQ-F-28 nuevos; mensaje de enteros y montos negativos (D-083, D-084); eliminar salidas (D-098); unidad bloqueada con historial (D-102); venta sin productos (D-106) |
 | **Fecha** | 2026-10-26 |
 | **Fuentes** | `docs/propuesta.md` · `CLAUDE.md` (INV-xx, D-xxx) |
 | **Sintaxis** | EARS (*Easy Approach to Requirements Syntax*) |
@@ -169,8 +169,10 @@
   > **WHEN** the owner saves a `Sale`, **IF** the quantity of any `SaleItem` exceeds the available-to-sell stock of its `Product`, **THEN** the system **SHALL** block the whole sale and display "Solo hay X disponibles de {producto}" for each affected product.
 
   > **WHEN** the owner saves a `Sale` and every item is within its available-to-sell stock, **THEN** the system **SHALL** store the sale and subtract each item's quantity from its product's stock on hand.
+
+  > **WHEN** the owner saves a `Sale`, **IF** it has no product lines, **THEN** the system **SHALL** block the save and display "Agrega al menos un producto".
 * **Nota:** una venta normal no puede usar unidades apartadas por pedidos. La existencia se valida sobre el total, no en el tiempo: una venta con fecha anterior a su producción es válida si el total alcanza (D-080).
-* **Origen:** INV-12, INV-01, D-016, D-069, D-080.
+* **Origen:** INV-12, INV-01, D-016, D-069, D-080, D-106.
 
 ### REQ-F-13: Editar venta
 * **Tipo:** Evento

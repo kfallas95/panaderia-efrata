@@ -27,7 +27,7 @@
 | `docs/propuesta.md` | Documento fuente: alcance, módulos, reglas, identidad visual y requisitos del curso | ✅ v1.1 (nota de vigencia, C-01) |
 | `CLAUDE.md` | Memoria semántica: lenguaje ubicuo, invariantes, decisiones, preguntas abiertas | ✅ v1.1 (auditoría del paso 7) |
 | `system_prompt.md` | Reglas de contexto para agentes de IA (RC-03) | ✅ v1.2 (auditoría del paso 7) |
-| `docs/requirements.md` | Requerimientos en EARS, completos en inglés (RC-02) | ✅ v1.8 |
+| `docs/requirements.md` | Requerimientos en EARS, completos en inglés (RC-02) | ✅ v1.9 |
 | `docs/data-contract.json` | Contrato de datos (JSON Schema) | ✅ v1.2 |
 | `docs/wireframe.md` | Wireframes | ✅ v1.3 |
 | `docs/design.md` | Arquitectura, módulos, estado y trazabilidad | ✅ v1.2 |
@@ -323,6 +323,10 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-102 | La unidad de un insumo solo se puede cambiar mientras no tenga historial (compras o conteos); después: "La unidad no se puede cambiar porque el insumo ya tiene compras o conteos". Se agrega a REQ-F-07 (`requirements.md` v1.8). | 2026-10-26 |
 | D-103 | Textos de confirmación: "¿Eliminar {insumo}?" (sin historial); "{insumo} tiene historial; se desactivará y no aparecerá en nuevos gastos ni conteos" (con historial); "¿Eliminar el gasto {descripción} ({monto})?". | 2026-10-26 |
 | D-104 | Fase 6: filtro de gastos sin resultados "No hay gastos en esta categoría"; textos "No hay insumos desactivados", "Registrado: {cantidad} {unidad}" y "Cantidad real ({unidad})"; un gasto se edita o elimina desde su formulario ("Eliminar gasto"); al editar un gasto se conserva su insumo aunque esté desactivado; el historial del insumo junta conteos y compras (las compras se editan desde Gastos). | 2026-10-26 |
+| D-105 | Fase 6 verificada por el autor y aprobada (commit `Fase 6: insumos y gastos`). | 2026-10-26 |
+| D-106 | Una venta sin productos se bloquea con "Agrega al menos un producto". Se agrega a REQ-F-12 (`requirements.md` v1.9). | 2026-10-26 |
+| D-107 | Una venta se edita o elimina desde su formulario (botón "Eliminar venta"); confirmación "¿Eliminar la venta de {total} del {fecha}?". Si viene de un pedido se agrega "El pedido de {cliente} volverá a Pendiente". | 2026-10-26 |
+| D-108 | Fase 7: "Nueva venta" empieza con una línea y las líneas vacías se ignoran; al editar, el disponible incluye las unidades de esa venta; las líneas repetidas se unen al guardar; las ventas de pedidos llevan la etiqueta "Pedido de {cliente}". | 2026-10-26 |
 
 ---
 
