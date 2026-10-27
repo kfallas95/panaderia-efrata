@@ -1,5 +1,5 @@
 // Textos de error visibles para el usuario, en español (T-1.9).
-// Fuente: docs/design.md §8 · D-035, D-052, D-058, D-066, D-074, D-076, D-082, D-083.
+// Fuente: docs/design.md §5.2, §5.4 y §8 · D-035, D-052, D-058, D-066, D-074, D-076, D-082, D-083.
 
 export const MSG = Object.freeze({
   REQUIRED: 'Este campo es obligatorio',
@@ -14,6 +14,8 @@ export const MSG = Object.freeze({
   PHONE: 'El teléfono debe tener 8 dígitos',
   ADVANCE_OVER_TOTAL: 'El adelanto no puede superar el total del pedido',
   AT_LEAST_ONE_QUANTITY: 'Ingresa al menos una cantidad',
+  STORAGE_UNAVAILABLE: 'No se puede guardar información en este navegador',
+  SAVE_FAILED: 'No se pudo guardar. Intenta de nuevo.',
 });
 
 /** "Usa máximo {n} decimales" (REQ-F-28). */

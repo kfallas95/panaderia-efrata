@@ -40,18 +40,18 @@
 
 El dominio no usa el DOM, IndexedDB, `new Date()` ni `crypto`; recibe `now` o `today` como parámetro (design §2.1).
 
-- [ ] **T-1.1** `types.js`: enumeraciones `ExpenseCategory`, `OrderStatus`, `StockOutReason` y `SupplyUnit`, con sus etiquetas en español (`CLAUDE.md` §3.3).
-- [ ] **T-1.2** `money.js`: `parseMoney(text)` y `formatMoney(cents)` (D-025, D-058).
+- [x] **T-1.1** `types.js`: enumeraciones `ExpenseCategory`, `OrderStatus`, `StockOutReason` y `SupplyUnit`, con sus etiquetas en español (`CLAUDE.md` §3.3).
+- [x] **T-1.2** `money.js`: `parseMoney(text)` y `formatMoney(cents)` (D-025, D-058).
   - Acepta coma o punto como separador decimal.
   - No acepta separadores de miles.
   - Máximo 2 decimales.
-- [ ] **T-1.3** `quantity.js`: `parseProductQuantity` (enteros) y `parseSupplyQuantity` (hasta 3 decimales, guardada en milésimas) (D-038, D-075).
-- [ ] **T-1.4** `dates.js`: comparación de fechas y horas locales, rango de día y de mes, y "posterior al minuto" (D-075).
+- [x] **T-1.3** `quantity.js`: `parseProductQuantity` (enteros) y `parseSupplyQuantity` (hasta 3 decimales, guardada en milésimas) (D-038, D-075).
+- [x] **T-1.4** `dates.js`: comparación de fechas y horas locales, rango de día y de mes, y "posterior al minuto" (D-075).
   - ⚠️ `new Date("2026-11-07")` se interpreta como UTC y en Costa Rica (UTC-6) da el día anterior. Usar siempre `new Date(y, m − 1, d)`.
-- [ ] **T-1.5** `stock.js`: `stockOnHand`, `reservedQuantity`, `availableToSell` (mínimo 0), faltante por producto y `supplyQuantity(s, now)` (design §6).
-- [ ] **T-1.6** `orderAllocation.js`: asignación por plazo (hora de entrega + 2 h), entrega y `createdAt` (D-050, D-053, D-063).
-- [ ] **T-1.7** `totals.js`: totales de venta y de pedido, y saldo del pedido. `report.js`: `totalSold`, `totalExpenses` por categoría y `profit` (INV-19).
-- [ ] **T-1.8** `validators.js`:
+- [x] **T-1.5** `stock.js`: `stockOnHand`, `reservedQuantity`, `availableToSell` (mínimo 0), faltante por producto y `supplyQuantity(s, now)` (design §6).
+- [x] **T-1.6** `orderAllocation.js`: asignación por plazo (hora de entrega + 2 h), entrega y `createdAt` (D-050, D-053, D-063).
+- [x] **T-1.7** `totals.js`: totales de venta y de pedido, y saldo del pedido. `report.js`: `totalSold`, `totalExpenses` por categoría y `profit` (INV-19).
+- [x] **T-1.8** `validators.js`:
   - Vacíos.
   - Valores > 0 (el conteo físico admite 0).
   - Duplicados sin distinguir mayúsculas ni espacios extra.
@@ -60,7 +60,7 @@ El dominio no usa el DOM, IndexedDB, `new Date()` ni `crypto`; recibe `now` o `t
   - Teléfono de 8 dígitos.
   - Adelanto ≤ total.
   - Producto en pedidos pendientes (REQ-F-20 a REQ-F-24, REQ-F-27, D-074).
-- [ ] **T-1.9** `messages.js`: todos los textos de error de design §8, en español.
+- [x] **T-1.9** `messages.js`: todos los textos de error de design §8, en español.
 
 **Comportamiento sin cambios:**
 
