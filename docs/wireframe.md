@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Versión** | 1.5 (2026-10-27: mensaje de entrega por D-066; auditoría del paso 7, D-069 a D-082; D-083 y D-084; D-110 y D-111; D-114) |
+| **Versión** | 1.6 (2026-10-27: mensaje de entrega por D-066; auditoría del paso 7, D-069 a D-082; D-083 y D-084; D-110 y D-111; D-114; D-116) |
 | **Fecha** | 2026-10-26 |
 | **Fuentes** | `CLAUDE.md` §6 y §7 (D-014, D-046 a D-084) · `docs/requirements.md` v1.9 · `docs/data-contract.json` v1.2 |
 
@@ -346,6 +346,7 @@ Nuevo gasto
 ```
 
 - Las salidas de inventario no cuentan en el reporte (INV-21).
+- **Período (D-116):** abre en Mes con el mes actual. Día usa un campo de fecha (hoy por defecto, sin días futuros); Mes, una lista con los meses que tienen ventas o gastos más el mes actual, del más reciente al más antiguo. Sin movimientos, las tarjetas muestran ₡0,00. El período queda en la dirección: `#/report?period=month&month=2026-11` o `#/report?period=day&date=2026-11-02` (`design.md` §3.1).
 - En Reporte no hay botón (+) (D-046).
 
 ## 11. Errores de usuario (RC-04)

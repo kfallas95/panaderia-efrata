@@ -48,7 +48,7 @@ const SCREENS = {
   expenses: (c, r, ctx) => renderExpensesScreen(c, { category: r.query.category ?? '' }, ctx),
   expenseNew: (c, _r, ctx) => renderExpenseForm(c, {}, ctx),
   expenseEdit: (c, r, ctx) => renderExpenseForm(c, { id: r.params.id }, ctx),
-  report: (c) => renderReportScreen(c),
+  report: (c, r, ctx) => renderReportScreen(c, r.query, ctx),
 };
 
 /**

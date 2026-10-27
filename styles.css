@@ -809,3 +809,35 @@ textarea:disabled {
   background: var(--color-cream);
   color: var(--color-muted);
 }
+
+/* ---------- Fase 10: reporte ---------- */
+
+.report-picker {
+  max-width: 320px;
+}
+
+.report-cards {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.report-card p {
+  margin: 0;
+}
+
+.report-amount {
+  display: block;
+  font-family: var(--font-title);
+  font-size: 1.75rem;
+  margin: var(--space-1) 0;
+}
+
+.report-detail {
+  color: var(--color-muted);
+}
+
+@media (min-width: 768px) {
+  .report-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

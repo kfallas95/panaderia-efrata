@@ -80,6 +80,21 @@ export function formatWeekdayDayMonth(date) {
   return formatDateLabel(date).split(' ').slice(0, 3).join(' ');
 }
 
+const MONTH_NAMES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
+  'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+/** true si el texto es un mes válido 'YYYY-MM'. */
+export function isValidMonth(text) {
+  const match = /^(\d{4})-(\d{2})$/.exec(String(text ?? ''));
+  return Boolean(match) && Number(match[2]) >= 1 && Number(match[2]) <= 12;
+}
+
+/** Mes en español: '2026-11' → 'noviembre 2026' (D-116). */
+export function formatMonthLabel(month) {
+  const [y, m] = month.split('-').map(Number);
+  return `${MONTH_NAMES[m - 1]} ${y}`;
+}
+
 /** Día y mes en español: '2026-11-02' → '2 nov'. */
 export function formatDayMonth(date) {
   const [, m, d] = date.split('-').map(Number);

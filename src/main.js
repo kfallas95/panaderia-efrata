@@ -16,6 +16,7 @@ import { createStockCountService } from './application/stockCountService.js';
 import { createExpenseService } from './application/expenseService.js';
 import { createSaleService } from './application/saleService.js';
 import { createOrderService } from './application/orderService.js';
+import { createReportService } from './application/reportService.js';
 import { startApp } from './ui/app.js';
 
 const app = document.getElementById('app');
@@ -38,6 +39,7 @@ async function start() {
     expenses: createExpenseService(deps),
     sales: createSaleService(deps),
     orders: createOrderService(deps),
+    report: createReportService(deps),
   };
   startApp({ root: app, store, clock, services });
 }
