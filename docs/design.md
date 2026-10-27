@@ -116,7 +116,7 @@ App
 | `OrderCard` | Tarjeta con total, adelanto, saldo, "Faltan X" y "Atrasado". |
 | `StockLine` | Existencia · Apartado · Disponible · "Faltan X por producir" en dorado si aplica (REQ-F-06, D-077). |
 | `LineItemsEditor` | Líneas de venta o pedido con precio prellenado y editable (INV-13). |
-| `EmptyState` | Ilustración SVG + texto + botón (D-014). |
+| `EmptyState` | Ilustración SVG decorativa + texto + botón (D-014). Croissant en Pedidos y Ventas; pan en Inventario y Gastos (D-090). |
 | `Icon` | SVG propios desde `assets/icons/` (R2). |
 
 ### 3.4 Comportamiento responsive (R7)

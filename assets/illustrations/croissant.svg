@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" width="120" height="80" role="img" aria-label="Croissant">
+  <g fill="#D4A24C" stroke="#6B4226" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M8 52 C10 44 18 40 26 42 L30 60 C20 64 10 60 8 52 Z"/>
+    <path d="M112 52 C110 44 102 40 94 42 L90 60 C100 64 110 60 112 52 Z"/>
+    <path d="M24 40 C28 30 38 26 46 28 L48 60 C40 64 30 62 28 58 Z"/>
+    <path d="M96 40 C92 30 82 26 74 28 L72 60 C80 64 90 62 92 58 Z"/>
+    <path d="M44 28 C50 18 70 18 76 28 L74 62 C66 66 54 66 46 62 Z"/>
+  </g>
+  <path d="M52 30 C56 26 64 26 68 30" fill="none" stroke="#FBF5EC" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+</svg>

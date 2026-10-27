@@ -9,6 +9,7 @@
 ### Convenciones
 
 - Bocetos de estructura, no de diseño final. La paleta "Horno cálido", la tipografía serif en los títulos y los SVG propios se aplican en la implementación (RNF-09).
+- **Pantallas vacías (D-090):** croissant en Pedidos y Ventas; pan en Inventario y Gastos. Las ilustraciones son solo decorativas.
 - `[ ]` campo · `( )` botón · `▾` lista desplegable · `🌾` espiga SVG del encabezado (no es emoji) · `⚠` alerta visual.
 - Datos de ejemplo: se parte de `docs/data-contract.json` y se agregan estos datos para mostrar los casos de borde. Todos son coherentes entre pantallas. "Hoy" es lunes 2 de noviembre de 2026, después de las 10:00.
   - **Datos agregados:**

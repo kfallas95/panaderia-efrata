@@ -166,6 +166,12 @@ Supply   1 ──< StockCount
 - **Paleta "Horno cálido":** crema `#FBF5EC` (fondo) · café `#6B4226` (texto) · dorado trigo `#D4A24C` (acento y botón principal). `[P §5]`
 - Títulos en serif; tarjetas redondeadas. `[P §5]`
 - Ilustraciones SVG propias guardadas en el proyecto: encabezado, pantallas vacías e íconos de sección. `[P §5]`
+- **Tonos de apoyo (D-088):** tarjetas `#FFFFFF`, bordes `#EADBC4`, texto secundario `#8A6A52`, texto sobre dorado `#3E2614`; rojo de error `#B3261E` (errores, "Atrasado", montos negativos).
+- **Ilustraciones (D-089, D-090):**
+  - Espiga: encabezado y favicon.
+  - Croissant: Pedidos y Ventas vacíos.
+  - Pan: Inventario y Gastos vacíos.
+  - Son solo decorativas; la acción la tiene el botón.
 
 ---
 
@@ -299,6 +305,10 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-084 | Montos negativos se muestran con el signo menos antes del símbolo: "−₡13 000,50", en rojo. | 2026-10-26 |
 | D-085 | Se aprueba `docs/tasks.md` v1.0: fases 0 a 11 con Unchanged Behavior y verificación con fecha simulada. Se cierra la especificación (paso 8). | 2026-10-26 |
 | D-086 | `REFLECTION.md` va en la carpeta `docs/` (precisa D-068). El repositorio Git se crea ahora, antes de la Fase 0. | 2026-10-26 |
+| D-087 | Repositorio `github.com/kfallas95/panaderia-efrata` sin `.gitignore` ni `.gitattributes`; las exclusiones (`Claude outputs/`, archivos del sistema, `.vscode/`) viven en `.git/info/exclude`, solo en la computadora del autor. | 2026-10-26 |
+| D-088 | Tonos de apoyo de la paleta (tomados de la muestra aprobada) y rojo de error `#B3261E`. | 2026-10-26 |
+| D-089 | La espiga también se usa como favicon (ícono de la pestaña). | 2026-10-26 |
+| D-090 | Pantallas vacías: croissant en Pedidos y Ventas; pan en Inventario y Gastos. Las ilustraciones son solo decorativas. | 2026-10-26 |
 
 ---
 
