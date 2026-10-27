@@ -115,8 +115,8 @@ El dominio no usa el DOM, IndexedDB, `new Date()` ni `crypto`; recibe `now` o `t
 
 ## Fase 3 — Estado (`src/state/`)
 
-- [ ] **T-3.1** `store.js`: `getState`, `setState` y `subscribe`; se hidrata desde IndexedDB al arrancar (D-059).
-- [ ] **T-3.2** `selectors.js`: valores derivados (existencias, apartado, faltantes, totales, reporte) que usan solo funciones del dominio. Nunca se guardan (D-036).
+- [x] **T-3.1** `store.js`: `getState`, `setState` y `subscribe`; se hidrata desde IndexedDB al arrancar (D-059).
+- [x] **T-3.2** `selectors.js`: valores derivados (existencias, apartado, faltantes, totales, reporte) que usan solo funciones del dominio. Nunca se guardan (D-036).
 
 **Comportamiento sin cambios:**
 

@@ -63,3 +63,14 @@ export function isInMonth(date, month) {
   return monthOf(date) === month;
 }
 
+
+const WEEKDAYS = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+const MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+
+/** Etiqueta corta en español: '2026-11-07' → 'sáb 7 nov 2026'. */
+export function formatDateLabel(date) {
+  const [y, m, d] = date.split('-').map(Number);
+  const days = Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+  const weekday = WEEKDAYS[(((days + 4) % 7) + 7) % 7]; // 1970-01-01 fue jueves
+  return `${weekday} ${d} ${MONTHS[m - 1]} ${y}`;
+}

@@ -312,6 +312,8 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-091 | Fase 0 verificada por el autor y aprobada (commit `Fase 0: esqueleto del proyecto`). | 2026-10-26 |
 | D-092 | Fase 1 verificada por el autor y aprobada (commit `Fase 1: dominio puro`; 63 casos comprobados). | 2026-10-26 |
 | D-093 | Fase 2 verificada por el autor y aprobada (commit `Fase 2: infraestructura`). Se agregan a `messages.js` los textos de almacenamiento de design §5 ("No se puede guardar información en este navegador", "No se pudo guardar. Intenta de nuevo."). | 2026-10-26 |
+| D-094 | Fase 3 verificada por el autor y aprobada (commit `Fase 3: estado`). | 2026-10-26 |
+| D-095 | Fase 4 (UI base): textos de estados vacíos "Aún no tienes ventas", "Aún no tienes productos", "Aún no tienes insumos" y "Aún no tienes gastos"; Reporte sin ilustración; aviso de fecha simulada en amarillo suave `#FFF3C4` con borde dorado; el botón (+) solo en las listas; en computadora "+ Nuevo pedido", "+ Nueva venta", "+ Nuevo gasto" e Inventario "+ Nuevo" con menú; formularios aún no construidos muestran "← Título". | 2026-10-26 |
 
 ---
 
