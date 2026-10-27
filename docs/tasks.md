@@ -358,11 +358,11 @@ Al cerrar la fase deben quedar: María entregada (venta de ₡30 000,00 el 7 nov
 
 ## Fase 11 — Cierre
 
-- [ ] **T-11.1** Revisión responsive a 360, 768 y 1280 px, sin desbordes horizontales (R7).
-- [ ] **T-11.2** Revisar que todos los textos de la interfaz estén en español y coincidan con los mensajes de design §8 (R6).
-- [ ] **T-11.3** Recorrer las validaciones REQ-F-20 a REQ-F-24, REQ-F-27 y REQ-F-28 en **todos** los formularios (RC-04).
-- [ ] **T-11.4** Completar la matriz de verificación final (abajo) con los 28 REQ-F y los 10 RNF.
-- [ ] **T-11.5** README: descripción, tecnología, cómo ejecutar con Live Server, fecha simulada y estructura del repositorio. Además: requisitos del curso (RC-01 a RC-04) y sección "Documentación"; sin capturas (D-118).
+- [x] **T-11.1** Revisión responsive a 360, 768 y 1280 px, sin desbordes horizontales (R7).
+- [x] **T-11.2** Revisar que todos los textos de la interfaz estén en español y coincidan con los mensajes de design §8 (R6).
+- [x] **T-11.3** Recorrer las validaciones REQ-F-20 a REQ-F-24, REQ-F-27 y REQ-F-28 en **todos** los formularios (RC-04).
+- [x] **T-11.4** Completar la matriz de verificación final (abajo) con los 28 REQ-F y los 10 RNF.
+- [x] **T-11.5** README: descripción, tecnología, cómo ejecutar con Live Server, fecha simulada y estructura del repositorio. Además: requisitos del curso (RC-01 a RC-04) y sección "Documentación"; sin capturas (D-118).
 
 **Comportamiento sin cambios:**
 

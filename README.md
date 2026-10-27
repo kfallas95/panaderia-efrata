@@ -4,6 +4,12 @@ Aplicación web para que el dueño de la Panadería Efrata controle sus **pedido
 
 El proyecto se construyó con *Spec Driven Development*: primero la especificación (`docs/`), luego el código por fases, y cada fase la verificó y aprobó el autor antes de pasar a la siguiente.
 
+## Ver en línea
+
+**https://kfallas95.github.io/panaderia-efrata/** (publicada con GitHub Pages).
+
+La versión publicada empieza sin datos: cada navegador y cada dirección guardan los suyos, así que lo registrado con Live Server no aparece ahí.
+
 ## Qué hace
 
 | Sección | Funciones principales |
@@ -39,8 +45,11 @@ Los datos quedan guardados en el navegador. Para empezar de cero: herramientas d
 Para probar entregas, atrasos y reportes sin esperar días, se puede indicar la fecha y la hora en la dirección, **antes del `#`**:
 
 ```
+https://kfallas95.github.io/panaderia-efrata/?today=2026-11-07&time=14:59#/orders
 http://127.0.0.1:5500/index.html?today=2026-11-07&time=14:59#/orders
 ```
+
+La primera dirección es la versión publicada; la segunda, la de Live Server.
 
 - `today=AAAA-MM-DD` es la fecha; `time=HH:MM` es la hora (opcional; si falta, se usa la hora real).
 - El reloj simulado **avanza** desde esa hora como un reloj normal.
