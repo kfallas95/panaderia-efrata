@@ -2,9 +2,9 @@
 
 | | |
 |---|---|
-| **Versión** | 0.1 (borrador para aprobación) |
+| **Versión** | 1.0 (aprobada por el autor el 2026-10-26) |
 | **Fecha** | 2026-10-26 |
-| **Fuentes** | `docs/requirements.md` v1.5 · `docs/design.md` v1.1 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.2 · `CLAUDE.md` · `system_prompt.md` |
+| **Fuentes** | `docs/requirements.md` v1.6 · `docs/design.md` v1.2 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 · `CLAUDE.md` · `system_prompt.md` |
 | **Verificación** | Manual, sin pruebas automatizadas (R5). Cada fase termina con su lista de verificación. |
 | **Ejecución** | Módulos ES nativos y Live Server, sin build (R4) |
 
@@ -77,7 +77,8 @@ El dominio no usa el DOM, IndexedDB, `new Date()` ni `crypto`; recibe `now` o `t
 | `formatMoney(125050)` | `₡1 250,50` |
 | `parseSupplyQuantity("2,5")` | 2500 |
 | `parseSupplyQuantity("2,3755")` | Error "Usa máximo 3 decimales" |
-| `parseProductQuantity("1,5")` | Error "Usa máximo 0 decimales" ❓ ver nota |
+| `parseProductQuantity("1,5")` | Error "Escribe un número entero" (D-083) |
+| `formatMoney(-1300050)` | `−₡13 000,50` (D-084) |
 | Pan casero: producción 20, salida 2, venta 5 | `stockOnHand` = 13 |
 | Harina: conteo 3500 el 1 nov 18:00 + compra 2000 el 2 nov 09:30 | 5500 (5,5 kg) |
 | La misma compra fechada el 1 nov a las 17:00 o a las 18:00 | 3500 (no suma; D-037, D-075) |
@@ -85,8 +86,6 @@ El dominio no usa el DOM, IndexedDB, `new Date()` ni `crypto`; recibe `now` o `t
 | Lo mismo con `now` = sáb 16:00 | María: faltan 0 (atrasada, dentro del margen) · Luis: faltan 3 |
 | Lo mismo con `now` = sáb 17:01 | María: faltan 3 · Luis: faltan 0 |
 | `"8888-0000"` · `"88880000"` · `"8888-000"` | válido · válido · Error "El teléfono debe tener 8 dígitos" |
-
-> **Nota ❓:** para cantidades de producto, el mensaje de REQ-F-28 con n = 0 queda "Usa máximo 0 decimales". Se confirma con el autor al revisar este plan.
 
 ---
 
@@ -345,7 +344,7 @@ Al cerrar la fase deben quedar: María entregada (venta de ₡30 000,00 el 7 nov
 | Período | Total vendido | Total de gastos | Ganancia |
 |---|---|---|---|
 | Mes de noviembre 2026 | ₡37 500,00 | ₡20 500,50 (Insumos ₡2 000,00 · Servicios ₡18 500,50) | ₡16 999,50 |
-| Día 2 nov | ₡7 500,00 | ₡20 500,50 | Negativa, en rojo (gastos mayores que ventas) |
+| Día 2 nov | ₡7 500,00 | ₡20 500,50 | −₡13 000,50 en rojo |
 | Día 7 nov | ₡30 000,00 | ₡0,00 | ₡30 000,00 |
 
 ---

@@ -5,3 +5,6 @@ desktop.ini
 
 # Editor
 .vscode/
+
+# Copias de trabajo de Claude (borradores, no son la versión vigente)
+Claude outputs/

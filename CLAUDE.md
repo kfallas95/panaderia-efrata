@@ -31,7 +31,7 @@
 | `docs/data-contract.json` | Contrato de datos (JSON Schema) | ✅ v1.2 |
 | `docs/wireframe.md` | Wireframes | ✅ v1.3 |
 | `docs/design.md` | Arquitectura, módulos, estado y trazabilidad | ✅ v1.2 |
-| `REFLECTION.md` | Reflexión del proyecto (reemplaza la retrospectiva del paso 6; D-068) | Al final del proyecto |
+| `docs/REFLECTION.md` | Reflexión del proyecto (reemplaza la retrospectiva del paso 6; D-068, D-086) | Al final del proyecto |
 | `docs/tasks.md` | Plan por fases con Unchanged Behavior | ✅ v1.0 |
 
 ---
@@ -298,6 +298,7 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-083 | Cantidad de producto con decimales: mensaje "Escribe un número entero" (en lugar de "Usa máximo 0 decimales"). | 2026-10-26 |
 | D-084 | Montos negativos se muestran con el signo menos antes del símbolo: "−₡13 000,50", en rojo. | 2026-10-26 |
 | D-085 | Se aprueba `docs/tasks.md` v1.0: fases 0 a 11 con Unchanged Behavior y verificación con fecha simulada. Se cierra la especificación (paso 8). | 2026-10-26 |
+| D-086 | `REFLECTION.md` va en la carpeta `docs/` (precisa D-068). El repositorio Git se crea ahora, antes de la Fase 0. | 2026-10-26 |
 
 ---
 

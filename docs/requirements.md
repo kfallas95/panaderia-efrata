@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Versión** | 1.5 (2026-10-26) — cambios: REQ-F-24 (D-044); REQ-F-25 y REQ-F-26 (D-048, D-049); REQ-F-06, REQ-F-15 y REQ-F-20 (D-050 a D-053); prioridad y entrega (D-063 a D-066); auditoría del paso 7 (D-069 a D-081), con REQ-F-27 y REQ-F-28 nuevos |
+| **Versión** | 1.6 (2026-10-26) — cambios: REQ-F-24 (D-044); REQ-F-25 y REQ-F-26 (D-048, D-049); REQ-F-06, REQ-F-15 y REQ-F-20 (D-050 a D-053); prioridad y entrega (D-063 a D-066); auditoría del paso 7 (D-069 a D-081), con REQ-F-27 y REQ-F-28 nuevos; mensaje de enteros y montos negativos (D-083, D-084) |
 | **Fecha** | 2026-10-26 |
 | **Fuentes** | `docs/propuesta.md` · `CLAUDE.md` (INV-xx, D-xxx) |
 | **Sintaxis** | EARS (*Easy Approach to Requirements Syntax*) |
@@ -263,7 +263,7 @@
 * **Precondición:** Ninguna.
 * **Sintaxis EARS:**
   > **WHEN** the owner selects a day or a month in the report, **THEN** the system **SHALL** display the total sold, the total expenses broken down into `SUPPLIES` and `SERVICES`, and the profit (total sold − total expenses) for that period.
-* **Nota:** la ganancia puede ser negativa. Las salidas de inventario no cuentan como venta ni como gasto (INV-21).
+* **Nota:** la ganancia puede ser negativa; se muestra en rojo con el signo menos antes del símbolo: "−₡13 000,50" (D-084). Las salidas de inventario no cuentan como venta ni como gasto (INV-21).
 * **Origen:** INV-19, D-010.
 
 ---
@@ -332,9 +332,11 @@
 * **Sintaxis EARS:**
   > **WHEN** the owner enters a number, **IF** it contains letters, more than one separator or a thousands separator, **THEN** the system **SHALL** block the save and display "Escribe un número válido, por ejemplo 1250,50".
 
-  > **WHEN** the owner enters a number, **IF** it has more decimals than allowed (2 for amounts, 0 for product quantities, 3 for supply quantities), **THEN** the system **SHALL** block the save and display "Usa máximo {n} decimales".
+  > **WHEN** the owner enters a number, **IF** it has more decimals than allowed (2 for amounts, 3 for supply quantities), **THEN** the system **SHALL** block the save and display "Usa máximo {n} decimales".
+
+  > **WHEN** the owner enters a product quantity, **IF** it has decimals, **THEN** the system **SHALL** block the save and display "Escribe un número entero".
 * **Nota:** se acepta coma o punto como separador decimal: `1250,50` = `1250.50`. `1.250` en un monto se rechaza por tener 3 decimales, para evitar leer ₡1,25 (D-058).
-* **Origen:** D-058, D-078.
+* **Origen:** D-058, D-078, D-083.
 
 ---
 
@@ -351,7 +353,7 @@
 | RNF-07 | Interfaz mobile-first y responsive. | R7 |
 | RNF-08 | Arquitectura en capas con repositorios; el dominio no accede directamente a IndexedDB. | R8 |
 | RNF-09 | Identidad visual "Horno cálido" con ilustraciones SVG propias guardadas en el proyecto. | D-014 |
-| RNF-10 | Montos en colones guardados como céntimos enteros y mostrados con 2 decimales. | D-025 |
+| RNF-10 | Montos en colones guardados como céntimos enteros y mostrados con 2 decimales; los negativos con el signo menos antes del símbolo (−₡13 000,50). | D-025, D-084 |
 
 ---
 
