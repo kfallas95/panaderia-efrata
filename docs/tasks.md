@@ -4,7 +4,7 @@
 |---|---|
 | **Versión** | 1.0 (aprobada por el autor el 2026-10-26) |
 | **Fecha** | 2026-10-26 |
-| **Fuentes** | `docs/requirements.md` v1.7 · `docs/design.md` v1.2 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 · `CLAUDE.md` · `system_prompt.md` |
+| **Fuentes** | `docs/requirements.md` v1.8 · `docs/design.md` v1.2 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 · `CLAUDE.md` · `system_prompt.md` |
 | **Verificación** | Manual, sin pruebas automatizadas (R5). Cada fase termina con su lista de verificación. |
 | **Ejecución** | Módulos ES nativos y Live Server, sin build (R4) |
 
@@ -156,10 +156,10 @@ El dominio no usa el DOM, IndexedDB, `new Date()` ni `crypto`; recibe `now` o `t
 
 Fecha simulada: `?today=2026-11-02&time=10:00`.
 
-- [ ] **T-5.1** `productService`: crear y editar (REQ-F-01); eliminar o desactivar (REQ-F-02, D-074); reactivar (REQ-F-25).
-- [ ] **T-5.2** `productionService`: registrar con el formulario de varios productos ("Ingresa al menos una cantidad"), editar y eliminar sin dejar la existencia negativa (REQ-F-03, REQ-F-04, D-076).
-- [ ] **T-5.3** `stockOutService`: salida con motivo, sin superar lo disponible; eliminar salida (REQ-F-05, D-098).
-- [ ] **T-5.4** `InventoryScreen`, pestaña Productos (REQ-F-06, D-077):
+- [x] **T-5.1** `productService`: crear y editar (REQ-F-01); eliminar o desactivar (REQ-F-02, D-074); reactivar (REQ-F-25).
+- [x] **T-5.2** `productionService`: registrar con el formulario de varios productos ("Ingresa al menos una cantidad"), editar y eliminar sin dejar la existencia negativa (REQ-F-03, REQ-F-04, D-076).
+- [x] **T-5.3** `stockOutService`: salida con motivo, sin superar lo disponible; eliminar salida (REQ-F-05, D-098).
+- [x] **T-5.4** `InventoryScreen`, pestaña Productos (REQ-F-06, D-077):
   - `StockLine`: existencia, apartado, disponible y "Faltan X" en dorado.
   - Sección "Desactivados".
   - Detalle con historial.
@@ -219,6 +219,7 @@ Fecha simulada: `?today=2026-11-02&time=10:00`.
 | Gasto de Servicios "Recibo de luz" ₡18 500,50 a las 10:00 | Aparece en Gastos; ningún inventario cambia |
 | Gasto con la descripción vacía | "Este campo es obligatorio" |
 | Monto "18.500,50" | "Escribe un número válido, por ejemplo 1250,50" |
+| Editar Harina y cambiar la unidad a g | "La unidad no se puede cambiar porque el insumo ya tiene compras o conteos" |
 
 ---
 

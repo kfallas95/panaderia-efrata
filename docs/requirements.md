@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Versión** | 1.7 (2026-10-26) — cambios: REQ-F-24 (D-044); REQ-F-25 y REQ-F-26 (D-048, D-049); REQ-F-06, REQ-F-15 y REQ-F-20 (D-050 a D-053); prioridad y entrega (D-063 a D-066); auditoría del paso 7 (D-069 a D-081), con REQ-F-27 y REQ-F-28 nuevos; mensaje de enteros y montos negativos (D-083, D-084); eliminar salidas (D-098) |
+| **Versión** | 1.8 (2026-10-26) — cambios: REQ-F-24 (D-044); REQ-F-25 y REQ-F-26 (D-048, D-049); REQ-F-06, REQ-F-15 y REQ-F-20 (D-050 a D-053); prioridad y entrega (D-063 a D-066); auditoría del paso 7 (D-069 a D-081), con REQ-F-27 y REQ-F-28 nuevos; mensaje de enteros y montos negativos (D-083, D-084); eliminar salidas (D-098); unidad bloqueada con historial (D-102) |
 | **Fecha** | 2026-10-26 |
 | **Fuentes** | `docs/propuesta.md` · `CLAUDE.md` (INV-xx, D-xxx) |
 | **Sintaxis** | EARS (*Easy Approach to Requirements Syntax*) |
@@ -110,7 +110,9 @@
 * **Precondición:** Formulario de insumo abierto.
 * **Sintaxis EARS:**
   > **WHEN** the owner saves a `Supply` with a name and a unit, **THEN** the system **SHALL** store it as active with its own unit.
-* **Origen:** INV-05, INV-07. Validaciones en REQ-F-20 a REQ-F-22.
+
+  > **WHEN** the owner edits a `Supply`, **IF** it has history (purchases or stock counts) **AND** the unit is changed, **THEN** the system **SHALL** block the save and display "La unidad no se puede cambiar porque el insumo ya tiene compras o conteos".
+* **Origen:** INV-05, INV-07, D-102. Validaciones en REQ-F-20 a REQ-F-22.
 
 ### REQ-F-08: Conteo físico de insumo
 * **Tipo:** Evento

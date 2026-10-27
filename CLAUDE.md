@@ -27,7 +27,7 @@
 | `docs/propuesta.md` | Documento fuente: alcance, módulos, reglas, identidad visual y requisitos del curso | ✅ v1.1 (nota de vigencia, C-01) |
 | `CLAUDE.md` | Memoria semántica: lenguaje ubicuo, invariantes, decisiones, preguntas abiertas | ✅ v1.1 (auditoría del paso 7) |
 | `system_prompt.md` | Reglas de contexto para agentes de IA (RC-03) | ✅ v1.2 (auditoría del paso 7) |
-| `docs/requirements.md` | Requerimientos en EARS, completos en inglés (RC-02) | ✅ v1.7 |
+| `docs/requirements.md` | Requerimientos en EARS, completos en inglés (RC-02) | ✅ v1.8 |
 | `docs/data-contract.json` | Contrato de datos (JSON Schema) | ✅ v1.2 |
 | `docs/wireframe.md` | Wireframes | ✅ v1.3 |
 | `docs/design.md` | Arquitectura, módulos, estado y trazabilidad | ✅ v1.2 |
@@ -122,7 +122,7 @@ Supply   1 ──< StockCount
 | INV-04 | No existen dos `Product` con el mismo nombre. | `[P §4]` · RC-04 |
 | INV-05 | No existen dos `Supply` con el mismo nombre. | `[P §4]` · RC-04 |
 | INV-06 | Un `Order` no tiene dos `OrderItem` del mismo `Product`, ni una `Sale` dos `SaleItem` del mismo `Product`; la cantidad se suma en una sola línea. | `[P §4]` · RC-04 · D-069 |
-| INV-07 | Cada `Supply` tiene su propia unidad. | `[P §3.3]` |
+| INV-07 | Cada `Supply` tiene su propia unidad; no se cambia si el insumo tiene historial (D-102). | `[P §3.3]` |
 | INV-08 | Un `Expense` `SUPPLIES` indica insumo, cantidad y monto, y **suma** la cantidad al `Supply`. Un `Expense` `SERVICES` no afecta inventario. | `[P §3.4]` |
 | INV-09 | Un `StockCount` **reemplaza** la cantidad del `Supply` por la real. | `[P §3.3]` |
 | INV-10 | Producir **no** descuenta insumos (sin recetas). | `[P §3.3]` |
@@ -319,6 +319,10 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-098 | Las salidas de inventario se pueden **eliminar** (la existencia vuelve a subir); no se editan: para corregir una se elimina y se registra de nuevo. Amplía D-022. | 2026-10-26 |
 | D-099 | Textos de confirmación: "¿Eliminar {producto}?" (producto sin historial); "{producto} tiene historial; se desactivará y no aparecerá en nuevas ventas ni pedidos" (con historial); "¿Eliminar la producción de {cantidad} {producto} del {fecha}?". | 2026-10-26 |
 | D-100 | Fase 5: confirmación "¿Eliminar la salida de {cantidad} {producto} del {fecha}?"; textos de apoyo "No hay productos desactivados", "Sin movimientos", "Escribe cuántas unidades hiciste de cada producto." y etiqueta "Desactivado"; "Faltan X por producir" en dorado oscuro `#8A5A00` sobre `#FBEFD5`; al guardar, producto nuevo y producción vuelven a Inventario, y editar producto, editar producción y salida vuelven al detalle; el historial del producto junta producciones, salidas y ventas (estas últimas solo de lectura). | 2026-10-26 |
+| D-101 | Fase 5 verificada por el autor y aprobada (commit `Fase 5: catálogo e inventario de productos`). | 2026-10-26 |
+| D-102 | La unidad de un insumo solo se puede cambiar mientras no tenga historial (compras o conteos); después: "La unidad no se puede cambiar porque el insumo ya tiene compras o conteos". Se agrega a REQ-F-07 (`requirements.md` v1.8). | 2026-10-26 |
+| D-103 | Textos de confirmación: "¿Eliminar {insumo}?" (sin historial); "{insumo} tiene historial; se desactivará y no aparecerá en nuevos gastos ni conteos" (con historial); "¿Eliminar el gasto {descripción} ({monto})?". | 2026-10-26 |
+| D-104 | Fase 6: filtro de gastos sin resultados "No hay gastos en esta categoría"; textos "No hay insumos desactivados", "Registrado: {cantidad} {unidad}" y "Cantidad real ({unidad})"; un gasto se edita o elimina desde su formulario ("Eliminar gasto"); al editar un gasto se conserva su insumo aunque esté desactivado; el historial del insumo junta conteos y compras (las compras se editan desde Gastos). | 2026-10-26 |
 
 ---
 

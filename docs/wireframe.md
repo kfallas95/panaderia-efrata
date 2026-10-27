@@ -4,7 +4,7 @@
 |---|---|
 | **Versión** | 1.3 (2026-10-26: mensaje de entrega por D-066; auditoría del paso 7, D-069 a D-082; D-083 y D-084) |
 | **Fecha** | 2026-10-26 |
-| **Fuentes** | `CLAUDE.md` §6 y §7 (D-014, D-046 a D-084) · `docs/requirements.md` v1.7 · `docs/data-contract.json` v1.2 |
+| **Fuentes** | `CLAUDE.md` §6 y §7 (D-014, D-046 a D-084) · `docs/requirements.md` v1.8 · `docs/data-contract.json` v1.2 |
 
 ### Convenciones
 
@@ -242,6 +242,8 @@
 **Detalle del insumo:**
 
 - Historial de conteos (fecha, cantidad anterior y cantidad nueva) y de compras.
+- **Eliminar** (REQ-F-02, D-103): con historial "Harina tiene historial; se desactivará y no aparecerá en nuevos gastos ni conteos"; sin historial "¿Eliminar Harina?".
+- **Editar:** la unidad queda bloqueada si el insumo tiene compras o conteos (D-102).
 - Acciones: (Conteo físico) (Editar) (Eliminar o desactivar).
 
 ## 8. Menú (+) de Inventario y formularios
@@ -354,6 +356,7 @@ Todos los errores aparecen **en rojo junto al campo o la acción**. Al fallar no
 | Nombre repetido | "Ya existe un producto con ese nombre" / "Ya existe un insumo con ese nombre" | REQ-F-22 |
 | Venta o salida que supera lo disponible | "Solo hay X disponibles de {producto}" | REQ-F-05, 12, 13 |
 | Editar o eliminar producción que deja la existencia en negativo | "Solo hay X de {producto} en existencia" | REQ-F-04 |
+| Cambiar la unidad de un insumo con historial | "La unidad no se puede cambiar porque el insumo ya tiene compras o conteos" | REQ-F-07 |
 | Gasto que deja un insumo en negativo (verificación defensiva; con las reglas actuales no ocurre) | "Solo hay X {unidad} de {insumo}" | REQ-F-11 |
 | Desactivar o eliminar un producto en pedidos pendientes | "{producto} está en pedidos pendientes" | REQ-F-02 |
 | Producción sin ninguna cantidad | "Ingresa al menos una cantidad" | REQ-F-03 |

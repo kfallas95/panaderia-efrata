@@ -11,6 +11,9 @@ import { createStore, hydrateStore } from './state/store.js';
 import { createProductService } from './application/productService.js';
 import { createProductionService } from './application/productionService.js';
 import { createStockOutService } from './application/stockOutService.js';
+import { createSupplyService } from './application/supplyService.js';
+import { createStockCountService } from './application/stockCountService.js';
+import { createExpenseService } from './application/expenseService.js';
 import { startApp } from './ui/app.js';
 
 const app = document.getElementById('app');
@@ -28,6 +31,9 @@ async function start() {
     products: createProductService(deps),
     production: createProductionService(deps),
     stockOuts: createStockOutService(deps),
+    supplies: createSupplyService(deps),
+    stockCounts: createStockCountService(deps),
+    expenses: createExpenseService(deps),
   };
   startApp({ root: app, store, clock, services });
 }

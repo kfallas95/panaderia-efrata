@@ -10,12 +10,6 @@ export const PENDING_TITLES = Object.freeze({
   orderDetail: 'Pedido',
   saleNew: 'Nueva venta',
   saleEdit: 'Editar venta',
-  supplyNew: 'Nuevo insumo',
-  supplyEdit: 'Editar insumo',
-  supplyDetail: 'Insumo',
-  stockCount: 'Conteo físico',
-  expenseNew: 'Nuevo gasto',
-  expenseEdit: 'Editar gasto',
 });
 
 /** @param {{ title: string, backHref: string }} params */

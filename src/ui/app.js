@@ -14,6 +14,10 @@ import { renderProductForm } from './screens/inventory/productForm.js';
 import { renderProductDetail } from './screens/inventory/productDetail.js';
 import { renderProductionForm, renderProductionEdit } from './screens/inventory/productionForm.js';
 import { renderStockOutForm } from './screens/inventory/stockOutForm.js';
+import { renderSupplyForm } from './screens/inventory/supplyForm.js';
+import { renderSupplyDetail } from './screens/inventory/supplyDetail.js';
+import { renderStockCountForm } from './screens/inventory/stockCountForm.js';
+import { renderExpenseForm } from './screens/expenses/expenseForm.js';
 import { renderExpensesScreen } from './screens/expenses/expensesScreen.js';
 import { renderReportScreen } from './screens/report/reportScreen.js';
 import { renderPendingScreen, PENDING_TITLES } from './screens/pendingScreen.js';
@@ -30,7 +34,13 @@ const SCREENS = {
   production: (c, _r, ctx) => renderProductionForm(c, {}, ctx),
   productionEdit: (c, r, ctx) => renderProductionEdit(c, { id: r.params.id }, ctx),
   stockOut: (c, r, ctx) => renderStockOutForm(c, { productId: r.query.product ?? '' }, ctx),
-  expenses: (c) => renderExpensesScreen(c),
+  supplyNew: (c, _r, ctx) => renderSupplyForm(c, {}, ctx),
+  supplyEdit: (c, r, ctx) => renderSupplyForm(c, { id: r.params.id }, ctx),
+  supplyDetail: (c, r, ctx) => renderSupplyDetail(c, { id: r.params.id }, ctx),
+  stockCount: (c, r, ctx) => renderStockCountForm(c, { supplyId: r.query.supply ?? '' }, ctx),
+  expenses: (c, r, ctx) => renderExpensesScreen(c, { category: r.query.category ?? '' }, ctx),
+  expenseNew: (c, _r, ctx) => renderExpenseForm(c, {}, ctx),
+  expenseEdit: (c, r, ctx) => renderExpenseForm(c, { id: r.params.id }, ctx),
   report: (c) => renderReportScreen(c),
 };
 
