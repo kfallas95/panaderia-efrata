@@ -4,7 +4,7 @@
 |---|---|
 | **Versión** | 1.3 (2026-10-26: mensaje de entrega por D-066; auditoría del paso 7, D-069 a D-082; D-083 y D-084) |
 | **Fecha** | 2026-10-26 |
-| **Fuentes** | `CLAUDE.md` §6 y §7 (D-014, D-046 a D-084) · `docs/requirements.md` v1.6 · `docs/data-contract.json` v1.2 |
+| **Fuentes** | `CLAUDE.md` §6 y §7 (D-014, D-046 a D-084) · `docs/requirements.md` v1.7 · `docs/data-contract.json` v1.2 |
 
 ### Convenciones
 
@@ -207,10 +207,13 @@
 **Detalle del producto** (al tocarlo):
 
 - Historial de producción, salidas y ventas.
+  - Cada producción tiene (Editar) y (Eliminar). Editar abre un formulario con fecha y cantidad (D-097). Al eliminar: "¿Eliminar la producción de 20 Pan casero del 2 nov?" (D-099).
+  - Cada salida tiene (Eliminar); la existencia vuelve a subir (D-098). Confirmación: "¿Eliminar la salida de 5 Pan casero del 2 nov?" (D-100).
+  - Las ventas aparecen en el historial solo para consulta (D-100).
 - Acciones: (Editar) (Producción) (Salida) (Eliminar o desactivar).
-- **Eliminar** (REQ-F-02):
+- **Eliminar** (REQ-F-02, D-099):
   - Si el producto tiene historial: "Pan casero tiene historial; se desactivará y no aparecerá en nuevas ventas ni pedidos".
-  - Si no tiene historial: se elimina después de confirmar.
+  - Si no tiene historial: "¿Eliminar Pan casero?".
 
 ## 7. Inventario — Insumos
 

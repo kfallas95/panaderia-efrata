@@ -25,6 +25,7 @@ export const ROUTES = Object.freeze([
   { pattern: '/inventory/products/:id', name: 'productDetail', section: 'inventory' },
   { pattern: '/inventory/supplies/:id', name: 'supplyDetail', section: 'inventory' },
   { pattern: '/inventory/production', name: 'production', section: 'inventory' },
+  { pattern: '/inventory/production/:id/edit', name: 'productionEdit', section: 'inventory' },
   { pattern: '/inventory/stock-out', name: 'stockOut', section: 'inventory' },
   { pattern: '/inventory/count', name: 'stockCount', section: 'inventory' },
   { pattern: '/expenses', name: 'expenses', section: 'expenses' },

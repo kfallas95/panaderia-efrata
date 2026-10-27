@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Versión** | 1.6 (2026-10-26) — cambios: REQ-F-24 (D-044); REQ-F-25 y REQ-F-26 (D-048, D-049); REQ-F-06, REQ-F-15 y REQ-F-20 (D-050 a D-053); prioridad y entrega (D-063 a D-066); auditoría del paso 7 (D-069 a D-081), con REQ-F-27 y REQ-F-28 nuevos; mensaje de enteros y montos negativos (D-083, D-084) |
+| **Versión** | 1.7 (2026-10-26) — cambios: REQ-F-24 (D-044); REQ-F-25 y REQ-F-26 (D-048, D-049); REQ-F-06, REQ-F-15 y REQ-F-20 (D-050 a D-053); prioridad y entrega (D-063 a D-066); auditoría del paso 7 (D-069 a D-081), con REQ-F-27 y REQ-F-28 nuevos; mensaje de enteros y montos negativos (D-083, D-084); eliminar salidas (D-098) |
 | **Fecha** | 2026-10-26 |
 | **Fuentes** | `docs/propuesta.md` · `CLAUDE.md` (INV-xx, D-xxx) |
 | **Sintaxis** | EARS (*Easy Approach to Requirements Syntax*) |
@@ -85,7 +85,10 @@
   > **WHEN** the owner saves a `StockOut` with a quantity, a date and a reason (`REUSED` or `GIVEN_AWAY`), **IF** the quantity exceeds the product's available-to-sell stock, **THEN** the system **SHALL** block it and display "Solo hay X disponibles de {producto}".
 
   > **WHEN** the owner saves a valid `StockOut`, **THEN** the system **SHALL** subtract the quantity from the stock on hand without recording it as a sale or an expense.
-* **Origen:** INV-21, D-020.
+
+  > **WHEN** the owner confirms the deletion of a `StockOut`, **THEN** the system **SHALL** delete it and return its quantity to the product's stock on hand.
+* **Nota:** las salidas no se editan; para corregir una se elimina y se registra de nuevo (D-098).
+* **Origen:** INV-21, D-020, D-098.
 
 ### REQ-F-06: Mostrar existencias de productos
 * **Tipo:** Estado / Interfaz

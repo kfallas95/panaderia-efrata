@@ -4,7 +4,7 @@
 |---|---|
 | **Versión** | 1.2 (2026-10-26: auditoría del paso 7, D-069 a D-082; D-083 y D-084) |
 | **Fecha** | 2026-10-26 |
-| **Fuentes** | `docs/propuesta.md` · `CLAUDE.md` · `docs/requirements.md` v1.6 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 |
+| **Fuentes** | `docs/propuesta.md` · `CLAUDE.md` · `docs/requirements.md` v1.7 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 |
 
 ### Convenciones de este documento
 
@@ -84,7 +84,7 @@
 | `#/inventory/products` · `#/inventory/supplies` | `InventoryScreen` | §6, §7 |
 | `#/inventory/products/{id}` · `#/inventory/supplies/{id}` | `ProductDetail` · `SupplyDetail` | §6, §7 |
 | `#/inventory/products/{id}/edit` · `#/inventory/supplies/{id}/edit` | `ProductForm` · `SupplyForm` | §6, §7 |
-| `#/inventory/production` · `#/inventory/stock-out` · `#/inventory/count` · `#/inventory/products/new` · `#/inventory/supplies/new` | Formularios de inventario | §8 |
+| `#/inventory/production` · `#/inventory/production/{id}/edit` (D-097) · `#/inventory/stock-out` · `#/inventory/count` · `#/inventory/products/new` · `#/inventory/supplies/new` | Formularios de inventario | §8 |
 | `#/expenses?category=…` · `#/expenses/new` · `#/expenses/{id}/edit` | `ExpensesScreen` · `ExpenseForm` | §9 |
 | `#/report?period=day&date=…` · `#/report?period=month&month=…` | `ReportScreen` | §10 |
 
@@ -370,7 +370,7 @@ StockCount → stockCountService.create({supplyId, newQuantity})
 | REQ-F-01 | `validators` | `productService.save` | `ProductForm` |
 | REQ-F-02 | `validators` (tiene historial) | `productService` / `supplyService.removeOrDeactivate` | `ConfirmDialog` |
 | REQ-F-03 / 04 | `stock` | `productionService` | Formulario Producción |
-| REQ-F-05 | `stock` | `stockOutService` | Formulario Salida |
+| REQ-F-05 | `stock` | `stockOutService` (registrar y eliminar, D-098) | Formulario Salida · historial del producto |
 | REQ-F-06 | `stock` | — | `StockLine`, `InventoryScreen` |
 | REQ-F-07 | `validators` | `supplyService.save` | `SupplyForm` |
 | REQ-F-08 | `stock` | `stockCountService` | Formulario Conteo |
@@ -418,6 +418,8 @@ StockCount → stockCountService.create({supplyId, newQuantity})
 | D-082 | "La entrega no puede estar en el pasado" |
 | D-083 | "Escribe un número entero" para cantidades de producto |
 | D-084 | Montos negativos: "−₡13 000,50" |
+| D-097 | Ruta para editar producción |
+| D-098 | Las salidas se pueden eliminar |
 
 ## 11. Pendientes
 

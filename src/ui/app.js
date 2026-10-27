@@ -10,17 +10,28 @@ import { sectionByKey, LIST_ROUTES } from './sections.js';
 import { renderOrdersScreen } from './screens/orders/ordersScreen.js';
 import { renderSalesScreen } from './screens/sales/salesScreen.js';
 import { renderInventoryScreen } from './screens/inventory/inventoryScreen.js';
+import { renderProductForm } from './screens/inventory/productForm.js';
+import { renderProductDetail } from './screens/inventory/productDetail.js';
+import { renderProductionForm, renderProductionEdit } from './screens/inventory/productionForm.js';
+import { renderStockOutForm } from './screens/inventory/stockOutForm.js';
 import { renderExpensesScreen } from './screens/expenses/expensesScreen.js';
 import { renderReportScreen } from './screens/report/reportScreen.js';
 import { renderPendingScreen, PENDING_TITLES } from './screens/pendingScreen.js';
 
+/** Pantalla de cada ruta: (contenedor, ruta, contexto). */
 const SCREENS = {
-  orders: (container) => renderOrdersScreen(container),
-  sales: (container) => renderSalesScreen(container),
-  inventoryProducts: (container) => renderInventoryScreen(container, { tab: 'products' }),
-  inventorySupplies: (container) => renderInventoryScreen(container, { tab: 'supplies' }),
-  expenses: (container) => renderExpensesScreen(container),
-  report: (container) => renderReportScreen(container),
+  orders: (c) => renderOrdersScreen(c),
+  sales: (c) => renderSalesScreen(c),
+  inventoryProducts: (c, _r, ctx) => renderInventoryScreen(c, { tab: 'products' }, ctx),
+  inventorySupplies: (c, _r, ctx) => renderInventoryScreen(c, { tab: 'supplies' }, ctx),
+  productNew: (c, _r, ctx) => renderProductForm(c, {}, ctx),
+  productEdit: (c, r, ctx) => renderProductForm(c, { id: r.params.id }, ctx),
+  productDetail: (c, r, ctx) => renderProductDetail(c, { id: r.params.id }, ctx),
+  production: (c, _r, ctx) => renderProductionForm(c, {}, ctx),
+  productionEdit: (c, r, ctx) => renderProductionEdit(c, { id: r.params.id }, ctx),
+  stockOut: (c, r, ctx) => renderStockOutForm(c, { productId: r.query.product ?? '' }, ctx),
+  expenses: (c) => renderExpensesScreen(c),
+  report: (c) => renderReportScreen(c),
 };
 
 /** Dirección actual sin ?today ni ?time (para "Volver a la fecha real"). */
@@ -29,13 +40,27 @@ function realDateUrl(location) {
 }
 
 /**
- * @param {{ root: HTMLElement, store: object, clock: object }} deps
+ * @param {{ root: HTMLElement, store: object, clock: object, services: object }} deps
  */
-export function startApp({ root, store, clock }) {
+export function startApp({ root, store, clock, services }) {
   const shell = AppShell();
   replaceChildren(root, shell.element);
+  let router = null;
+  let currentRoute = null;
 
-  const render = (route) => {
+  const ctx = {
+    store,
+    clock,
+    services,
+    navigate: (hash) => {
+      if (window.location.hash === hash) render(currentRoute);
+      else router.navigate(hash);
+    },
+    refresh: () => render(currentRoute),
+  };
+
+  function render(route) {
+    currentRoute = route;
     const section = sectionByKey(route.section);
     shell.setActiveSection(section.key);
 
@@ -49,10 +74,13 @@ export function startApp({ root, store, clock }) {
 
     shell.main.replaceChildren();
     const screen = SCREENS[route.name];
-    if (screen) screen(shell.main, { route, store, clock });
+    if (screen) screen(shell.main, route, ctx);
     else renderPendingScreen(shell.main, { title: PENDING_TITLES[route.name], backHref: section.href });
-    window.scrollTo(0, 0);
-  };
+  }
 
-  return startRouter(render);
+  router = startRouter((route) => {
+    render(route);
+    window.scrollTo(0, 0);
+  });
+  return router;
 }

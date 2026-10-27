@@ -74,3 +74,9 @@ export function formatDateLabel(date) {
   const weekday = WEEKDAYS[(((days + 4) % 7) + 7) % 7]; // 1970-01-01 fue jueves
   return `${weekday} ${d} ${MONTHS[m - 1]} ${y}`;
 }
+
+/** Día y mes en español: '2026-11-02' → '2 nov'. */
+export function formatDayMonth(date) {
+  const [, m, d] = date.split('-').map(Number);
+  return `${d} ${MONTHS[m - 1]}`;
+}

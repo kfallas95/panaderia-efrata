@@ -27,7 +27,7 @@
 | `docs/propuesta.md` | Documento fuente: alcance, módulos, reglas, identidad visual y requisitos del curso | ✅ v1.1 (nota de vigencia, C-01) |
 | `CLAUDE.md` | Memoria semántica: lenguaje ubicuo, invariantes, decisiones, preguntas abiertas | ✅ v1.1 (auditoría del paso 7) |
 | `system_prompt.md` | Reglas de contexto para agentes de IA (RC-03) | ✅ v1.2 (auditoría del paso 7) |
-| `docs/requirements.md` | Requerimientos en EARS, completos en inglés (RC-02) | ✅ v1.6 |
+| `docs/requirements.md` | Requerimientos en EARS, completos en inglés (RC-02) | ✅ v1.7 |
 | `docs/data-contract.json` | Contrato de datos (JSON Schema) | ✅ v1.2 |
 | `docs/wireframe.md` | Wireframes | ✅ v1.3 |
 | `docs/design.md` | Arquitectura, módulos, estado y trazabilidad | ✅ v1.2 |
@@ -138,7 +138,7 @@ Supply   1 ──< StockCount
 | INV-20 | Al **eliminar** una `Sale`, las unidades de sus líneas **vuelven** al inventario. | D-017 |
 | INV-21 | Un `StockOut` resta unidades del producto con motivo `REUSED` o `GIVEN_AWAY`; no cuenta como venta ni como gasto. Cantidad ≤ `availableToSell` (INV-01). | D-020 |
 | INV-22 | Eliminar la `Sale` de un pedido entregado devuelve las unidades y regresa el `Order` a `PENDING` (vuelve a apartar). | D-021 |
-| INV-23 | Se pueden editar ventas y editar o eliminar gastos, producciones y pedidos. El inventario se ajusta por la diferencia; si el ajuste lo dejaría en negativo, se bloquea (INV-01). Los conteos físicos no se editan ni se eliminan. | D-022 |
+| INV-23 | Se pueden editar ventas, editar o eliminar gastos, producciones y pedidos, y eliminar salidas (D-098). El inventario se ajusta por la diferencia; si el ajuste lo dejaría en negativo, se bloquea (INV-01). Los conteos físicos no se editan ni se eliminan. | D-022 |
 | INV-24 | Un `Product` o `Supply` con historial no se elimina: se desactiva (`isActive = false`) y no aparece para nuevas operaciones. Sin historial, se puede eliminar. Un `Product` en pedidos `PENDING` no se puede desactivar ni eliminar. | D-023 · D-074 |
 | INV-25 | Cada `StockCount` guarda fecha, cantidad anterior y cantidad nueva. | D-024 |
 | INV-26 | Ventas, gastos, producciones y salidas admiten fecha **pasada o de hoy**; nunca futura. | D-027 |
@@ -314,6 +314,11 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-093 | Fase 2 verificada por el autor y aprobada (commit `Fase 2: infraestructura`). Se agregan a `messages.js` los textos de almacenamiento de design §5 ("No se puede guardar información en este navegador", "No se pudo guardar. Intenta de nuevo."). | 2026-10-26 |
 | D-094 | Fase 3 verificada por el autor y aprobada (commit `Fase 3: estado`). | 2026-10-26 |
 | D-095 | Fase 4 (UI base): textos de estados vacíos "Aún no tienes ventas", "Aún no tienes productos", "Aún no tienes insumos" y "Aún no tienes gastos"; Reporte sin ilustración; aviso de fecha simulada en amarillo suave `#FFF3C4` con borde dorado; el botón (+) solo en las listas; en computadora "+ Nuevo pedido", "+ Nueva venta", "+ Nuevo gasto" e Inventario "+ Nuevo" con menú; formularios aún no construidos muestran "← Título". | 2026-10-26 |
+| D-096 | Fase 4 verificada por el autor y aprobada (commit `Fase 4: UI base`). | 2026-10-26 |
+| D-097 | Las producciones se editan o eliminan desde el historial del detalle del producto; editar abre `#/inventory/production/{id}/edit` (fecha y cantidad). | 2026-10-26 |
+| D-098 | Las salidas de inventario se pueden **eliminar** (la existencia vuelve a subir); no se editan: para corregir una se elimina y se registra de nuevo. Amplía D-022. | 2026-10-26 |
+| D-099 | Textos de confirmación: "¿Eliminar {producto}?" (producto sin historial); "{producto} tiene historial; se desactivará y no aparecerá en nuevas ventas ni pedidos" (con historial); "¿Eliminar la producción de {cantidad} {producto} del {fecha}?". | 2026-10-26 |
+| D-100 | Fase 5: confirmación "¿Eliminar la salida de {cantidad} {producto} del {fecha}?"; textos de apoyo "No hay productos desactivados", "Sin movimientos", "Escribe cuántas unidades hiciste de cada producto." y etiqueta "Desactivado"; "Faltan X por producir" en dorado oscuro `#8A5A00` sobre `#FBEFD5`; al guardar, producto nuevo y producción vuelven a Inventario, y editar producto, editar producción y salida vuelven al detalle; el historial del producto junta producciones, salidas y ventas (estas últimas solo de lectura). | 2026-10-26 |
 
 ---
 

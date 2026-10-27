@@ -474,3 +474,143 @@ textarea {
     display: none;
   }
 }
+
+/* ---------- Fase 5: listas, detalle e historial ---------- */
+
+.card-list {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.card-row h3 {
+  margin: 0;
+}
+
+.stock-line p {
+  margin: var(--space-1) 0 0;
+}
+
+.stock-available {
+  font-weight: 600;
+}
+
+.shortfall {
+  color: #8A5A00;
+  background: #FBEFD5;
+  border-radius: var(--radius-control);
+  padding: var(--space-1) var(--space-2);
+  display: inline-block;
+  font-weight: 600;
+}
+
+.inactive-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+}
+
+.inactive-row a {
+  color: var(--color-coffee);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-4) 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: 999px;
+  background: var(--color-border);
+  color: var(--color-coffee);
+  font-size: 0.875rem;
+}
+
+.btn-small {
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.875rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-danger-outline {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.history-item p {
+  margin: 0;
+}
+
+.history-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.form {
+  max-width: 520px;
+}
+
+.form-message {
+  margin-bottom: var(--space-3);
+}
+
+.radio-group {
+  border: none;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+}
+
+.radio-group legend {
+  margin-bottom: var(--space-1);
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+}
+
+.radio input {
+  width: auto;
+  min-height: auto;
+}

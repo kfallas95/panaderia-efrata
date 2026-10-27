@@ -4,7 +4,7 @@
 |---|---|
 | **Versión** | 1.0 (aprobada por el autor el 2026-10-26) |
 | **Fecha** | 2026-10-26 |
-| **Fuentes** | `docs/requirements.md` v1.6 · `docs/design.md` v1.2 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 · `CLAUDE.md` · `system_prompt.md` |
+| **Fuentes** | `docs/requirements.md` v1.7 · `docs/design.md` v1.2 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 · `CLAUDE.md` · `system_prompt.md` |
 | **Verificación** | Manual, sin pruebas automatizadas (R5). Cada fase termina con su lista de verificación. |
 | **Ejecución** | Módulos ES nativos y Live Server, sin build (R4) |
 
@@ -129,14 +129,14 @@ El dominio no usa el DOM, IndexedDB, `new Date()` ni `crypto`; recibe `now` o `t
 
 ## Fase 4 — UI base (`src/ui/`)
 
-- [ ] **T-4.1** `router.js`: router por hash con las rutas de design §3.1 (D-055). Una ruta desconocida lleva a `#/orders`.
-- [ ] **T-4.2** `AppShell` (D-046, R7):
+- [x] **T-4.1** `router.js`: router por hash con las rutas de design §3.1 (D-055). Una ruta desconocida lleva a `#/orders`.
+- [x] **T-4.2** `AppShell` (D-046, R7):
   - **Celular:** barra inferior con Pedidos, Ventas, Inventario, Gastos y Reporte.
   - **768 px o más:** menú lateral.
   - **Encabezado:** espiga y "Panadería Efrata".
-- [ ] **T-4.3** `FabButton` (+) según la sección; oculto en Reporte (D-046).
-- [ ] **T-4.4** Componentes compartidos (design §3.3): `MoneyText`, `MoneyInput`, `QuantityInput`, `FieldError`, `ConfirmDialog`, `Tabs`, `Chips`, `CollapsibleSection`, `EmptyState` e `Icon`.
-- [ ] **T-4.5** `SimulatedDateBanner`: "Fecha simulada: … · Volver a la fecha real" (D-057).
+- [x] **T-4.3** `FabButton` (+) según la sección; oculto en Reporte (D-046).
+- [x] **T-4.4** Componentes compartidos (design §3.3): `MoneyText`, `MoneyInput`, `QuantityInput`, `FieldError`, `ConfirmDialog`, `Tabs`, `Chips`, `CollapsibleSection`, `EmptyState` e `Icon`.
+- [x] **T-4.5** `SimulatedDateBanner`: "Fecha simulada: … · Volver a la fecha real" (D-057).
 
 **Comportamiento sin cambios:**
 
@@ -158,7 +158,7 @@ Fecha simulada: `?today=2026-11-02&time=10:00`.
 
 - [ ] **T-5.1** `productService`: crear y editar (REQ-F-01); eliminar o desactivar (REQ-F-02, D-074); reactivar (REQ-F-25).
 - [ ] **T-5.2** `productionService`: registrar con el formulario de varios productos ("Ingresa al menos una cantidad"), editar y eliminar sin dejar la existencia negativa (REQ-F-03, REQ-F-04, D-076).
-- [ ] **T-5.3** `stockOutService`: salida con motivo, sin superar lo disponible (REQ-F-05).
+- [ ] **T-5.3** `stockOutService`: salida con motivo, sin superar lo disponible; eliminar salida (REQ-F-05, D-098).
 - [ ] **T-5.4** `InventoryScreen`, pestaña Productos (REQ-F-06, D-077):
   - `StockLine`: existencia, apartado, disponible y "Faltan X" en dorado.
   - Sección "Desactivados".
@@ -185,6 +185,7 @@ Fecha simulada: `?today=2026-11-02&time=10:00`.
 | Salida de 2, Regalado | Existencia 18; no aparece como venta |
 | Salida de 30 | "Solo hay 18 disponibles de Pan casero" |
 | Editar la producción de 20 a 1 | "Solo hay 18 de Pan casero en existencia"; no cambia nada |
+| Salida de 5, Reutilizado → eliminarla | Existencia 13 → vuelve a 18 |
 | Eliminar "Pan casero" (tiene historial) | Se desactiva y aparece en "Desactivados"; Reactivar lo devuelve |
 
 ---
