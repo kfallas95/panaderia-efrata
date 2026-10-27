@@ -309,6 +309,7 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-088 | Tonos de apoyo de la paleta (tomados de la muestra aprobada) y rojo de error `#B3261E`. | 2026-10-26 |
 | D-089 | La espiga también se usa como favicon (ícono de la pestaña). | 2026-10-26 |
 | D-090 | Pantallas vacías: croissant en Pedidos y Ventas; pan en Inventario y Gastos. Las ilustraciones son solo decorativas. | 2026-10-26 |
+| D-091 | Fase 0 verificada por el autor y aprobada (commit `Fase 0: esqueleto del proyecto`). | 2026-10-26 |
 
 ---
 

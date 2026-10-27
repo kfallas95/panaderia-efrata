@@ -25,10 +25,10 @@
 
 ## Fase 0 — Esqueleto del proyecto
 
-- [ ] **T-0.1** Crear `index.html`, que carga `src/main.js` con `type="module"` (R4).
-- [ ] **T-0.2** Crear las carpetas de design §4: `src/{domain,application,infrastructure,state,ui/{components,screens}}` y `assets/{illustrations,icons}`.
-- [ ] **T-0.3** Crear `styles.css` mobile-first con la paleta "Horno cálido" como variables CSS (`#FBF5EC`, `#6B4226`, `#D4A24C`), títulos serif y tarjetas redondeadas (D-014, R7).
-- [ ] **T-0.4** Dibujar los SVG propios con la paleta:
+- [x] **T-0.1** Crear `index.html`, que carga `src/main.js` con `type="module"` (R4).
+- [x] **T-0.2** Crear las carpetas de design §4: `src/{domain,application,infrastructure,state,ui/{components,screens}}` y `assets/{illustrations,icons}`.
+- [x] **T-0.3** Crear `styles.css` mobile-first con la paleta "Horno cálido" como variables CSS (`#FBF5EC`, `#6B4226`, `#D4A24C`), títulos serif y tarjetas redondeadas (D-014, R7).
+- [x] **T-0.4** Dibujar los SVG propios con la paleta:
   - Ilustraciones: espiga (encabezado), pan y croissant (estados vacíos).
   - Íconos: pedidos, ventas, inventario, gastos y reporte (D-014, R2).
 

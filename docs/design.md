@@ -247,7 +247,7 @@ UI (formulario) ──► servicio de aplicación
 | `reservedQuantity(p)` | Σ cantidades de `p` en `Order` `PENDING` | INV-14 |
 | `availableToSell(p)` | `max(0, stockOnHand − reservedQuantity)` | D-051 |
 | `missingToProduce(order, p)` | Ver algoritmo de asignación | D-050, D-053, D-063 |
-| `supplyQuantity(s, now)` | En milésimas enteras. Sin conteos: Σ compras. Con conteos: `newQuantity` del último conteo + Σ compras cuyo `date`+`time` (al minuto) es **estrictamente posterior** al minuto de `countedAt` | D-037, D-041, D-075 |
+| `supplyQuantity(s)` | En milésimas enteras. Sin conteos: Σ compras. Con conteos: `newQuantity` del último conteo + Σ compras cuyo `date`+`time` (al minuto) es **estrictamente posterior** al minuto de `countedAt` | D-037, D-041, D-075 |
 | Faltante por producto (Inventario) | `max(0, reservedQuantity − stockOnHand)` | D-077 |
 | Total de venta | Σ `quantity × unitPrice` de `items` y `customItems` | `data-contract` |
 | Total y saldo de pedido | Total = Σ líneas; saldo = total − (`advanceAmount` ?? 0) | D-043 |
@@ -328,7 +328,7 @@ ConfirmDialog ("El pedido de {cliente} volverá a Pendiente" si sale.orderId)
 ExpenseForm (SUPPLIES) → expenseService.create({category, description, supplyId, quantity, amount, date, time})
   → la cantidad del insumo sube solo si el minuto de date+time es estrictamente posterior al minuto de countedAt del último conteo (D-037, D-075)
 StockCount → stockCountService.create({supplyId, newQuantity})
-  → countedAt = Clock.now() (en la capa de aplicación) · previousQuantity = supplyQuantity(s, now) en ese momento
+  → countedAt = Clock.now() (en la capa de aplicación) · previousQuantity = supplyQuantity(s) en ese momento
 ```
 
 ---
