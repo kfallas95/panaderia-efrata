@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Versión** | 1.3 (2026-10-26: mensaje de entrega por D-066; auditoría del paso 7, D-069 a D-082; D-083 y D-084) |
+| **Versión** | 1.4 (2026-10-26: mensaje de entrega por D-066; auditoría del paso 7, D-069 a D-082; D-083 y D-084; D-110 y D-111) |
 | **Fecha** | 2026-10-26 |
 | **Fuentes** | `CLAUDE.md` §6 y §7 (D-014, D-046 a D-084) · `docs/requirements.md` v1.9 · `docs/data-contract.json` v1.2 |
 
@@ -10,7 +10,7 @@
 
 - Bocetos de estructura, no de diseño final. La paleta "Horno cálido", la tipografía serif en los títulos y los SVG propios se aplican en la implementación (RNF-09).
 - **Pantallas vacías (D-090, D-095):**
-  - Croissant: Pedidos ("Aún no tienes pedidos pendientes") y Ventas ("Aún no tienes ventas").
+  - Croissant: Pedidos ("Aún no tienes pedidos pendientes", "Aún no tienes pedidos entregados", "Aún no tienes pedidos cancelados") y Ventas ("Aún no tienes ventas").
   - Pan: Inventario ("Aún no tienes productos" / "Aún no tienes insumos") y Gastos ("Aún no tienes gastos").
   - Reporte no tiene ilustración. Las ilustraciones son solo decorativas.
 - `[ ]` campo · `( )` botón · `▾` lista desplegable · `🌾` espiga SVG del encabezado (no es emoji) · `⚠` alerta visual.
@@ -63,7 +63,7 @@
 ```
 
 - **Pendientes:** entrega más próxima primero. **Entregados y Cancelados:** más reciente primero (D-047).
-- **Estado vacío:** croissant SVG + "Aún no tienes pedidos pendientes" + (Nuevo pedido) (D-014).
+- **Estado vacío:** croissant SVG + "Aún no tienes pedidos pendientes" + (Nuevo pedido) (D-014). En Entregados y Cancelados: "Aún no tienes pedidos entregados" / "Aún no tienes pedidos cancelados", sin botón (D-111).
 
 ## 2. Detalle del pedido
 
@@ -126,6 +126,7 @@
 - **Precio del producto:** se llena desde el catálogo y se puede editar (INV-13).
 - **Producto repetido:** si se agrega un producto que ya está, se suma a su línea (REQ-F-22).
 - **Productos desactivados:** no aparecen en la lista (INV-24).
+- **Sin líneas** (ni del catálogo ni personalizadas): "Agrega al menos un producto" (D-110).
 
 ## 4. Ventas
 
@@ -363,6 +364,7 @@ Todos los errores aparecen **en rojo junto al campo o la acción**. Al fallar no
 | Desactivar o eliminar un producto en pedidos pendientes | "{producto} está en pedidos pendientes" | REQ-F-02 |
 | Producción sin ninguna cantidad | "Ingresa al menos una cantidad" | REQ-F-03 |
 | Venta sin productos | "Agrega al menos un producto" | REQ-F-12 |
+| Pedido sin líneas | "Agrega al menos un producto" | REQ-F-15 |
 | Entregar un pedido con faltantes | "Faltan X {producto} por producir para este pedido" (el pedido sigue Pendiente) | REQ-F-17 |
 | Fecha futura | "La fecha no puede ser futura" | REQ-F-23 |
 | Entrega en el pasado | "La entrega no puede estar en el pasado" | REQ-F-23 |

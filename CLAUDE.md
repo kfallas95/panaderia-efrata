@@ -327,6 +327,10 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-106 | Una venta sin productos se bloquea con "Agrega al menos un producto". Se agrega a REQ-F-12 (`requirements.md` v1.9). | 2026-10-26 |
 | D-107 | Una venta se edita o elimina desde su formulario (botón "Eliminar venta"); confirmación "¿Eliminar la venta de {total} del {fecha}?". Si viene de un pedido se agrega "El pedido de {cliente} volverá a Pendiente". | 2026-10-26 |
 | D-108 | Fase 7: "Nueva venta" empieza con una línea y las líneas vacías se ignoran; al editar, el disponible incluye las unidades de esa venta; las líneas repetidas se unen al guardar; las ventas de pedidos llevan la etiqueta "Pedido de {cliente}". | 2026-10-26 |
+| D-109 | Fase 7 verificada por el autor y aprobada (commit `Fase 7: ventas`). | 2026-10-26 |
+| D-110 | Un pedido sin líneas (ni del catálogo ni personalizadas) se bloquea con "Agrega al menos un producto", igual que una venta (D-106). Se agrega a REQ-F-15 (`requirements.md` v1.10). | 2026-10-26 |
+| D-111 | Pestañas de Pedidos sin pedidos: croissant + "Aún no tienes pedidos entregados" y "Aún no tienes pedidos cancelados", sin botón (Pendientes conserva "Aún no tienes pedidos pendientes" + Nuevo pedido). En la Fase 8 el detalle del pedido muestra solo Editar y Eliminar; Entregar y Cancelar se agregan en la Fase 9. | 2026-10-26 |
+| D-112 | Fase 8: "Nuevo pedido" empieza con una línea del catálogo y sin personalizados, y las líneas vacías se ignoran; al editar, el disponible incluye lo que el pedido ya apartaba; al guardar, un pedido nuevo vuelve a la lista y uno editado a su detalle; las tarjetas muestran líneas, Total, Adelanto (solo si hay) y Saldo; el re-render cada 60 s y al volver a la pestaña aplica solo a la lista y al detalle de pedidos, nunca a formularios. | 2026-10-26 |
 
 ---
 

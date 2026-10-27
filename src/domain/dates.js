@@ -75,6 +75,11 @@ export function formatDateLabel(date) {
   return `${weekday} ${d} ${MONTHS[m - 1]} ${y}`;
 }
 
+/** Día de la semana, día y mes: '2026-11-07' → 'sáb 7 nov' (entrega del pedido). */
+export function formatWeekdayDayMonth(date) {
+  return formatDateLabel(date).split(' ').slice(0, 3).join(' ');
+}
+
 /** Día y mes en español: '2026-11-02' → '2 nov'. */
 export function formatDayMonth(date) {
   const [, m, d] = date.split('-').map(Number);

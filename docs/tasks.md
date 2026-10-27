@@ -227,12 +227,12 @@ Fecha simulada: `?today=2026-11-02&time=10:00`.
 
 Fecha simulada: `?today=2026-11-02&time=11:00`. Pan casero tiene existencia 18 (Fase 5).
 
-- [ ] **T-7.1** `saleService.create`, `update` y `delete` (REQ-F-12 a REQ-F-14):
+- [x] **T-7.1** `saleService.create`, `update` y `delete` (REQ-F-12 a REQ-F-14):
   - Líneas repetidas: se suman en una (D-069).
   - Bloqueo de toda la venta si una línea no alcanza (D-031).
   - Validación sobre el total (D-080).
-- [ ] **T-7.2** `SaleForm` con `LineItemsEditor`: precio prellenado y editable (INV-13).
-- [ ] **T-7.3** `SalesScreen`: ventas agrupadas por día con su total (D-047).
+- [x] **T-7.2** `SaleForm` con `LineItemsEditor`: precio prellenado y editable (INV-13).
+- [x] **T-7.3** `SalesScreen`: ventas agrupadas por día con su total (D-047).
 
 **Cubre:** REQ-F-12 a REQ-F-14 (ventas normales), REQ-F-22 (líneas repetidas).
 
@@ -264,10 +264,11 @@ Al cerrar la fase debe quedar **una** venta de 5 panes el 2 nov, con existencia 
   - Apartado.
   - Teléfono (REQ-F-24) y adelanto ≤ total (REQ-F-27).
   - Entrega hoy o futura solo al crear o cambiarla (D-073).
+  - Sin líneas: "Agrega al menos un producto" (D-110).
 - [ ] **T-8.2** `OrdersScreen`:
-  - Pestañas Pendientes, Entregados y Cancelados (D-047, D-071).
+  - Pestañas Pendientes, Entregados y Cancelados (D-047, D-071); textos vacíos de D-111.
   - `OrderCard` con total, adelanto, saldo, "Faltan X {producto} por producir" (dorado) y "Atrasado" (rojo) (REQ-F-26).
-- [ ] **T-8.3** `OrderForm` y `OrderDetail` (wireframe §2 y §3).
+- [ ] **T-8.3** `OrderForm` y `OrderDetail` (wireframe §2 y §3). En esta fase el detalle muestra solo Editar y Eliminar; Entregar y Cancelar llegan en la Fase 9 (D-111).
 - [ ] **T-8.4** Re-render cada 60 s con la app visible y al volver a la pestaña (D-062, design §5.3).
 - [ ] **T-8.5** Bloquear desactivar o eliminar productos en pedidos pendientes (REQ-F-02, D-074).
 
@@ -288,6 +289,7 @@ Al cerrar la fase debe quedar **una** venta de 5 panes el 2 nov, con existencia 
 | Venta normal de 1 pan | "Solo hay 0 disponibles de Pan casero" |
 | Teléfono "8888-000" · adelanto ₡40 000,00 · entrega el 1 nov | "El teléfono debe tener 8 dígitos" · "El adelanto no puede superar el total del pedido" · "La entrega no puede estar en el pasado" |
 | Agregar Pan casero dos veces en un pedido | Se suma en una sola línea |
+| Guardar un pedido sin líneas | "Agrega al menos un producto" |
 | Eliminar o desactivar "Pan casero" | "Pan casero está en pedidos pendientes" |
 | `?today=2026-11-07&time=14:59` · esperar 1 minuto en Pedidos | María pasa a "Atrasado" sin recargar; sigue cubierta |
 | `…time=16:00` · editar la nota de María sin cambiar la entrega | Se guarda (D-073) |

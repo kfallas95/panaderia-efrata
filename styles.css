@@ -714,3 +714,75 @@ textarea {
   background: var(--color-border);
   font-size: 0.8125rem;
 }
+
+/* ---------- Fase 8: pedidos ---------- */
+
+.card-overdue {
+  border-left: 4px solid var(--color-danger);
+}
+
+.overdue-tag {
+  display: inline-block;
+  margin: 0 0 var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-control);
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+.order-customer {
+  margin: 0 0 var(--space-1);
+}
+
+.order-lines {
+  margin: var(--space-2) 0;
+}
+
+.amount-rows {
+  margin: var(--space-2) 0;
+}
+
+.amount-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.amount-row:last-child {
+  font-weight: 700;
+}
+
+.order-line-list {
+  list-style: none;
+  margin: var(--space-3) 0;
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.order-line {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+}
+
+.order-notes {
+  margin: var(--space-3) 0;
+}
+
+.card .shortfall {
+  margin: var(--space-1) 0 0;
+}
+
+.form-section {
+  font-size: 1.0625rem;
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .order-list {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}

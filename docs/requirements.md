@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Versión** | 1.9 (2026-10-26) — cambios: REQ-F-24 (D-044); REQ-F-25 y REQ-F-26 (D-048, D-049); REQ-F-06, REQ-F-15 y REQ-F-20 (D-050 a D-053); prioridad y entrega (D-063 a D-066); auditoría del paso 7 (D-069 a D-081), con REQ-F-27 y REQ-F-28 nuevos; mensaje de enteros y montos negativos (D-083, D-084); eliminar salidas (D-098); unidad bloqueada con historial (D-102); venta sin productos (D-106) |
+| **Versión** | 1.10 (2026-10-26) — cambios: REQ-F-24 (D-044); REQ-F-25 y REQ-F-26 (D-048, D-049); REQ-F-06, REQ-F-15 y REQ-F-20 (D-050 a D-053); prioridad y entrega (D-063 a D-066); auditoría del paso 7 (D-069 a D-081), con REQ-F-27 y REQ-F-28 nuevos; mensaje de enteros y montos negativos (D-083, D-084); eliminar salidas (D-098); unidad bloqueada con historial (D-102); venta sin productos (D-106); pedido sin líneas (D-110) |
 | **Fecha** | 2026-10-26 |
 | **Fuentes** | `docs/propuesta.md` · `CLAUDE.md` (INV-xx, D-xxx) |
 | **Sintaxis** | EARS (*Easy Approach to Requirements Syntax*) |
@@ -211,13 +211,15 @@
   > **WHEN** a `PENDING` order is displayed, **IF** the stock on hand of a catalog product does not cover the quantity of that product in this order after allocating the stock to the other `PENDING` orders with higher priority, **THEN** the system **SHALL** show "Faltan X {producto} por producir" for that product, where X is the uncovered quantity.
 
   > **WHEN** the owner adds a custom `OrderItem` with a description and a price, **THEN** the system **SHALL** store it without affecting any inventory.
+
+  > **WHEN** the owner saves an `Order`, **IF** it has neither catalog lines nor custom lines, **THEN** the system **SHALL** block the save and display "Agrega al menos un producto".
 * **Nota:** datos obligatorios: cliente, teléfono, líneas, fecha y hora de entrega; opcionales: notas y adelanto (D-026). El adelanto solo se anota (INV-17).
 * **Prioridad (D-050, D-053, D-063):**
   1. Primero los pedidos **en plazo**, es decir, que no han superado su hora de entrega **+ 2 horas**, del más próximo al más lejano; en empate, el registrado antes.
   2. Después los pedidos que superaron ese margen, con el mismo orden.
   3. Si el cliente avisa que se atrasará, el dueño **reprograma** la entrega editando el pedido (REQ-F-16) y la prioridad se recalcula (D-064).
 * **Asignación:** las unidades en existencia se asignan siguiendo esa prioridad. Ejemplo: 13 panes; María pide 10 (sábado) y Luis 6 (domingo) → María cubierta, a Luis le faltan 3. Si el sábado a las 17:01 María no se ha entregado ni reprogramado, pierde la prioridad: Luis queda cubierto y a María le faltan 3.
-* **Origen:** INV-14, INV-15, INV-06, D-009, D-050, D-053, D-063, D-064.
+* **Origen:** INV-14, INV-15, INV-06, D-009, D-050, D-053, D-063, D-064, D-110.
 
 ### REQ-F-16: Editar o eliminar pedido
 * **Tipo:** Evento

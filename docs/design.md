@@ -347,6 +347,7 @@ StockCount → stockCountService.create({supplyId, newQuantity})
 | Producto en pedidos pendientes | REQ-F-02 | "{producto} está en pedidos pendientes" |
 | Producción sin cantidades | REQ-F-03 | "Ingresa al menos una cantidad" |
 | Venta sin productos | REQ-F-12 | "Agrega al menos un producto" (D-106) |
+| Pedido sin líneas | REQ-F-15 | "Agrega al menos un producto" (D-110) |
 | Cambiar la unidad de un insumo con historial | REQ-F-07 | "La unidad no se puede cambiar porque el insumo ya tiene compras o conteos" (D-102) |
 | Entregar pedido con faltantes | REQ-F-17 | "Faltan X {producto} por producir para este pedido" |
 | Fecha futura / entrega pasada | REQ-F-23 | "La fecha no puede ser futura" / "La entrega no puede estar en el pasado" |

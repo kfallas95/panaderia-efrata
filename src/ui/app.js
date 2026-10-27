@@ -8,6 +8,8 @@ import { FabButton } from './components/fabButton.js';
 import { SimulatedDateBanner } from './components/simulatedDateBanner.js';
 import { sectionByKey, LIST_ROUTES } from './sections.js';
 import { renderOrdersScreen } from './screens/orders/ordersScreen.js';
+import { renderOrderForm } from './screens/orders/orderForm.js';
+import { renderOrderDetail } from './screens/orders/orderDetail.js';
 import { renderSalesScreen } from './screens/sales/salesScreen.js';
 import { renderInventoryScreen } from './screens/inventory/inventoryScreen.js';
 import { renderProductForm } from './screens/inventory/productForm.js';
@@ -21,11 +23,13 @@ import { renderExpenseForm } from './screens/expenses/expenseForm.js';
 import { renderSaleForm } from './screens/sales/saleForm.js';
 import { renderExpensesScreen } from './screens/expenses/expensesScreen.js';
 import { renderReportScreen } from './screens/report/reportScreen.js';
-import { renderPendingScreen, PENDING_TITLES } from './screens/pendingScreen.js';
 
 /** Pantalla de cada ruta: (contenedor, ruta, contexto). */
 const SCREENS = {
-  orders: (c) => renderOrdersScreen(c),
+  orders: (c, r, ctx) => renderOrdersScreen(c, { tab: r.query.tab ?? 'pending' }, ctx),
+  orderNew: (c, _r, ctx) => renderOrderForm(c, {}, ctx),
+  orderEdit: (c, r, ctx) => renderOrderForm(c, { id: r.params.id }, ctx),
+  orderDetail: (c, r, ctx) => renderOrderDetail(c, { id: r.params.id }, ctx),
   sales: (c, _r, ctx) => renderSalesScreen(c, {}, ctx),
   saleNew: (c, _r, ctx) => renderSaleForm(c, {}, ctx),
   saleEdit: (c, r, ctx) => renderSaleForm(c, { id: r.params.id }, ctx),
@@ -46,6 +50,13 @@ const SCREENS = {
   expenseEdit: (c, r, ctx) => renderExpenseForm(c, { id: r.params.id }, ctx),
   report: (c) => renderReportScreen(c),
 };
+
+/**
+ * Pantallas que se vuelven a dibujar con el paso del tiempo (design §5.3, D-062).
+ * Los formularios no se re-dibujan para no borrar lo que el dueño está escribiendo.
+ */
+const TIME_REFRESH_ROUTES = Object.freeze(['orders', 'orderDetail']);
+const REFRESH_MS = 60_000;
 
 /** Dirección actual sin ?today ni ?time (para "Volver a la fecha real"). */
 function realDateUrl(location) {
@@ -87,9 +98,18 @@ export function startApp({ root, store, clock, services }) {
 
     shell.main.replaceChildren();
     const screen = SCREENS[route.name];
-    if (screen) screen(shell.main, route, ctx);
-    else renderPendingScreen(shell.main, { title: PENDING_TITLES[route.name], backHref: section.href });
+    screen(shell.main, route, ctx);
   }
+
+  // "Atrasado" y la prioridad dependen de la hora: cada 60 s con la app visible
+  // y al volver a la pestaña se re-dibuja Pedidos (REQ-F-26, D-062).
+  const refreshForTime = () => {
+    if (document.visibilityState === 'visible' && currentRoute && TIME_REFRESH_ROUTES.includes(currentRoute.name)) {
+      render(currentRoute);
+    }
+  };
+  setInterval(refreshForTime, REFRESH_MS);
+  document.addEventListener('visibilitychange', refreshForTime);
 
   router = startRouter((route) => {
     render(route);
