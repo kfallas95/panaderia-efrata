@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Versión** | 1.0 (aprobada por el autor el 2026-10-26) |
+| **Versión** | 1.1 (aprobada por el autor el 2026-10-26; notas de las fases 8 a 11: D-110, D-111, D-114, D-116 y D-118; avance de tareas marcado) |
 | **Fecha** | 2026-10-26 |
 | **Fuentes** | `docs/requirements.md` v1.9 · `docs/design.md` v1.2 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 · `CLAUDE.md` · `system_prompt.md` |
 | **Verificación** | Manual, sin pruebas automatizadas (R5). Cada fase termina con su lista de verificación. |
@@ -333,7 +333,7 @@ Al cerrar la fase deben quedar: María entregada (venta de ₡30 000,00 el 7 nov
 
 ## Fase 10 — Reporte
 
-- [ ] **T-10.1** `reportService` y `ReportScreen` (REQ-F-19):
+- [x] **T-10.1** `reportService` y `ReportScreen` (REQ-F-19):
   - Selector Día o Mes.
   - Tres tarjetas: Total vendido, Total de gastos (Insumos y Servicios) y Ganancia.
   - La ganancia se muestra en rojo si es negativa.
@@ -362,7 +362,7 @@ Al cerrar la fase deben quedar: María entregada (venta de ₡30 000,00 el 7 nov
 - [ ] **T-11.2** Revisar que todos los textos de la interfaz estén en español y coincidan con los mensajes de design §8 (R6).
 - [ ] **T-11.3** Recorrer las validaciones REQ-F-20 a REQ-F-24, REQ-F-27 y REQ-F-28 en **todos** los formularios (RC-04).
 - [ ] **T-11.4** Completar la matriz de verificación final (abajo) con los 28 REQ-F y los 10 RNF.
-- [ ] **T-11.5** README: descripción, tecnología, cómo ejecutar con Live Server, fecha simulada y estructura del repositorio.
+- [ ] **T-11.5** README: descripción, tecnología, cómo ejecutar con Live Server, fecha simulada y estructura del repositorio. Además: requisitos del curso (RC-01 a RC-04) y sección "Documentación"; sin capturas (D-118).
 
 **Comportamiento sin cambios:**
 
@@ -372,16 +372,45 @@ Al cerrar la fase deben quedar: María entregada (venta de ₡30 000,00 el 7 nov
 
 ## Verificación final (T-11.4)
 
-Se completa al cerrar la Fase 11.
+Completada el 2026-10-27, al cerrar la Fase 11. Cada caso viene de la tabla de verificación de su fase o de la revisión de la Fase 11 (D-118).
 
 | REQ | Verificado en | Caso comprobado | Estado |
 |---|---|---|---|
-| REQ-F-01 a REQ-F-06 | Fase 5 (y 8 para REQ-F-02) | | ⬜ |
-| REQ-F-07 a REQ-F-11 | Fase 6 | | ⬜ |
-| REQ-F-12 a REQ-F-14 | Fases 7 y 9 | | ⬜ |
-| REQ-F-15, 16, 24, 26, 27 | Fase 8 | | ⬜ |
-| REQ-F-17, 18 | Fase 9 | | ⬜ |
-| REQ-F-19 | Fase 10 | | ⬜ |
-| REQ-F-20 a 23, 28 | Fases 5 a 9 y 11 | | ⬜ |
-| REQ-F-25 | Fases 5 y 6 | | ⬜ |
-| RNF-01 a RNF-10 | Fases 0 a 4 y 11 | | ⬜ |
+| REQ-F-01 | Fase 5 | Crear "Pan casero" a ₡1 500,00 → aparece con existencia 0; en ventas y pedidos el precio se prellena y se puede editar | ✅ |
+| REQ-F-02 | Fases 5 y 8 | Eliminar "Pan casero" con historial → se desactiva; con pedidos pendientes → "Pan casero está en pedidos pendientes" | ✅ |
+| REQ-F-03 | Fase 5 | Producción de 20 el 2 nov → existencia 20; todas las casillas vacías → "Ingresa al menos una cantidad" | ✅ |
+| REQ-F-04 | Fase 5 | Editar la producción de 20 a 1 → "Solo hay 18 de Pan casero en existencia"; no cambia nada | ✅ |
+| REQ-F-05 | Fase 5 | Salida de 2, Regalado → existencia 18 y no aparece como venta; salida de 30 → "Solo hay 18 disponibles de Pan casero" | ✅ |
+| REQ-F-06 | Fases 5 y 8 | Pan casero: existencia 13 · apartado 16 · disponible 0 · "Faltan 3 por producir" | ✅ |
+| REQ-F-07 | Fase 6 | Crear "Harina" en kg → 0 kg y "Sin conteos"; con historial, cambiar la unidad → mensaje de unidad bloqueada | ✅ |
+| REQ-F-08 | Fases 6 y 11 | Conteo de 3,5 kg → historial anterior 0, nuevo 3,5; conteo 0 se acepta | ✅ |
+| REQ-F-09 | Fase 6 | Gasto de Insumos de 2 kg el 2 nov 09:30 → Harina 5,5 kg; una compra anterior al conteo no suma | ✅ |
+| REQ-F-10 | Fase 6 | "Recibo de luz" ₡18 500,50 → aparece en Gastos y ningún inventario cambia | ✅ |
+| REQ-F-11 | Fase 6 | Editar y eliminar gastos; el insumo se recalcula | ✅ |
+| REQ-F-12 | Fase 7 | Pan casero 3 + 2 → una línea de 5, total ₡7 500,00; venta de 14 → "Solo hay 13 disponibles de Pan casero"; sin productos → "Agrega al menos un producto" | ✅ |
+| REQ-F-13 | Fases 7 y 9 | Editar la venta de 5 a 6 → existencia 12; venta de un pedido → solo cambia la fecha | ✅ |
+| REQ-F-14 | Fases 7 y 9 | Eliminar la venta de Luis → existencia 13 y Luis vuelve a Pendientes | ✅ |
+| REQ-F-15 | Fase 8 | María 10 (sáb 15:00) y Luis 6 (dom 09:00) con 13 panes → Luis "Faltan 3 Pan casero por producir"; a las 17:01 los faltantes pasan a María | ✅ |
+| REQ-F-16 | Fase 8 | Editar la nota de María sin cambiar la entrega → se guarda; eliminar un pedido → libera lo apartado | ✅ |
+| REQ-F-17 | Fase 9 | Entregar a Luis a las 14:00 → "Faltan 3 Pan casero por producir para este pedido"; a las 17:01 → venta del 7 nov por ₡9 000,00 | ✅ |
+| REQ-F-18 | Fase 9 | Cancelar con la nota "Adelanto devuelto" → pasa a Cancelados, libera lo apartado y no crea venta | ✅ |
+| REQ-F-19 | Fase 10 | Noviembre: ₡37 500,00 · ₡20 500,50 · ₡16 999,50; 2 nov: ganancia −₡13 000,50 en rojo | ✅ |
+| REQ-F-20 | Fases 5 a 9 y 11 | Campos vacíos o con solo espacios en los 10 formularios → "Este campo es obligatorio"; lo escrito se conserva | ✅ |
+| REQ-F-21 | Fases 5 a 9 y 11 | Precio 0, cantidad −1, monto 0 → "Solo se admiten valores mayores a 0"; conteo −1 → "La cantidad no puede ser negativa" | ✅ |
+| REQ-F-22 | Fases 5 a 8 y 11 | " pan   CASERO " → "Ya existe un producto con ese nombre"; " HARINA " → "Ya existe un insumo con ese nombre"; producto repetido en venta o pedido → una sola línea | ✅ |
+| REQ-F-23 | Fases 5 a 9 y 11 | Fecha 3 nov con hoy 2 nov → "La fecha no puede ser futura"; entrega a las 13:59 con ahora 14:00 → "La entrega no puede estar en el pasado" | ✅ |
+| REQ-F-24 | Fases 8 y 11 | "8888-000", "8888-00001" y "8888 0000" → "El teléfono debe tener 8 dígitos" | ✅ |
+| REQ-F-25 | Fases 5 y 6 | Reactivar desde "Desactivados" → vuelve a la lista activa | ✅ |
+| REQ-F-26 | Fase 8 | `?today=2026-11-07&time=14:59` y esperar un minuto → María pasa a "Atrasado" sin recargar | ✅ |
+| REQ-F-27 | Fases 8 y 11 | Adelanto ₡1 500,01 con total ₡1 500,00 → "El adelanto no puede superar el total del pedido"; igual al total se acepta | ✅ |
+| REQ-F-28 | Fases 1, 6 y 11 | "18.500,50", "abc", "1 250" → "Escribe un número válido, por ejemplo 1250,50"; "1.250" → "Usa máximo 2 decimales"; "1,5" en producto → "Escribe un número entero" | ✅ |
+| RNF-01 | Fases 2 y 10 | Datos en IndexedDB `panaderiaEfrata`; persisten al recargar; sin login ni backend | ✅ |
+| RNF-02 | Fase 11 | Sin direcciones externas en `index.html`, `styles.css`, `src/` ni `assets/` | ✅ |
+| RNF-03 | Fase 11 | Solo JavaScript propio; todos los `import` son rutas relativas del proyecto | ✅ |
+| RNF-04 | Fases 0 y 11 | Módulos ES nativos (`<script type="module">`) servidos con Live Server; sin build | ✅ |
+| RNF-05 | Fases 0 a 11 | Verificación manual con las tablas de cada fase; sin pruebas automatizadas en el repositorio (D-118) | ✅ |
+| RNF-06 | Fase 11 | Código, nombres y contrato en inglés; los 168 textos de la interfaz en español; comentarios en español (D-120) | ✅ |
+| RNF-07 | Fases 4 y 11 | 25 pantallas a 360, 768 y 1280 px sin desplazamiento horizontal (D-119) | ✅ |
+| RNF-08 | Fases 2, 3 y 11 | El dominio no importa infraestructura, estado ni IndexedDB; acceso a datos solo por repositorios | ✅ |
+| RNF-09 | Fases 0 y 4 | Paleta "Horno cálido"; espiga, pan, croissant e íconos SVG propios en `assets/` | ✅ |
+| RNF-10 | Fases 1 y 10 | 125050 → ₡1 250,50; −1300050 → −₡13 000,50 en rojo | ✅ |

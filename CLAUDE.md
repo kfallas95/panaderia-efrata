@@ -26,13 +26,13 @@
 |---|---|---|
 | `docs/propuesta.md` | Documento fuente: alcance, módulos, reglas, identidad visual y requisitos del curso | ✅ v1.1 (nota de vigencia, C-01) |
 | `CLAUDE.md` | Memoria semántica: lenguaje ubicuo, invariantes, decisiones, preguntas abiertas | ✅ v1.1 (auditoría del paso 7) |
-| `system_prompt.md` | Reglas de contexto para agentes de IA (RC-03) | ✅ v1.2 (auditoría del paso 7) |
-| `docs/requirements.md` | Requerimientos en EARS, completos en inglés (RC-02) | ✅ v1.9 |
+| `system_prompt.md` | Reglas de contexto para agentes de IA (RC-03) | ✅ v1.3 (D-120) |
+| `docs/requirements.md` | Requerimientos en EARS, completos en inglés (RC-02) | ✅ v1.10 |
 | `docs/data-contract.json` | Contrato de datos (JSON Schema) | ✅ v1.2 |
-| `docs/wireframe.md` | Wireframes | ✅ v1.3 |
-| `docs/design.md` | Arquitectura, módulos, estado y trazabilidad | ✅ v1.2 |
+| `docs/wireframe.md` | Wireframes | ✅ v1.6 |
+| `docs/design.md` | Arquitectura, módulos, estado y trazabilidad | ✅ v1.3 |
 | `docs/REFLECTION.md` | Reflexión del proyecto (reemplaza la retrospectiva del paso 6; D-068, D-086) | Al final del proyecto |
-| `docs/tasks.md` | Plan por fases con Unchanged Behavior | ✅ v1.0 |
+| `docs/tasks.md` | Plan por fases con Unchanged Behavior | ✅ v1.1 |
 
 ---
 
@@ -335,6 +335,10 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-114 | Fase 9: (1) Entregar pide confirmación "¿Marcar como entregado el pedido de {cliente}? Se registrará una venta de {total}"; el bloqueo por faltantes se muestra en rojo debajo del botón Entregar. (2) Cancelar abre "¿Cancelar el pedido de {cliente}?" con el campo "Nota sobre el adelanto (opcional)" y los botones "Cancelar pedido" y "Volver". (3) El detalle de un pedido cerrado muestra "Entregado el {fecha} · {hora}" o "Cancelado el {fecha} · {hora}" y, si la hay, la nota de cancelación. (4) Después de entregar o cancelar se queda en el detalle, ya sin botones. (5) En el formulario de una venta de pedido las líneas y los artículos personalizados se ven bloqueados; solo la fecha se edita. | 2026-10-27 |
 | D-115 | Fase 9 verificada por el autor y aprobada (commit `Fase 9: entrega y cancelación`). | 2026-10-27 |
 | D-116 | Fase 10, reporte: (1) abre en Mes con el mes actual; (2) en Día, campo de fecha que empieza en hoy y no permite días futuros; (3) en Mes, lista desplegable ("noviembre 2026") con los meses que tienen ventas o gastos más el mes actual, del más reciente al más antiguo; (4) un período sin movimientos muestra ₡0,00 en las tres tarjetas, sin mensaje ni ilustración; (5) el período elegido queda en la dirección (`#/report?period=month&month=2026-11` o `#/report?period=day&date=2026-11-02`, como define `design.md` §3.1). | 2026-10-27 |
+| D-117 | Fase 10 verificada por el autor y aprobada (commit `Fase 10: reporte`). | 2026-10-27 |
+| D-118 | Fase 11: README en español (nombres de archivos y código en inglés, R6), con las secciones de T-11.5 más una tabla de requisitos del curso (RC-01 a RC-04) y una sección "Documentación" con enlaces a `docs/` y `system_prompt.md`; sin capturas. Los problemas que encuentre la revisión se muestran al autor antes de corregirlos y cada corrección se registra como decisión. Los scripts de prueba del agente no van al repositorio (RNF-05); la columna "Caso comprobado" de la matriz final usa los casos de la verificación de cada fase. | 2026-10-27 |
+| D-119 | Revisión de la Fase 11: en celular las pestañas se reparten el ancho por partes iguales (a 360 px "Cancelados" quedaba cortado); los montos nunca se parten en dos líneas y, en pantallas de menos de 480 px, el precio unitario de cada línea del detalle del pedido baja debajo del nombre para que los montos no se salgan de la tarjeta; el Reporte usa 3 columnas solo desde 1024 px. Solo cambia `styles.css`. | 2026-10-27 |
+| D-120 | Los comentarios técnicos del código van en **español**, igual que la documentación; el código, los nombres y el contrato de datos siguen en inglés (R6). Corrige la incongruencia detectada en la revisión de la Fase 11: `system_prompt.md` §3 pedía comentarios en inglés y el código los tiene en español desde la Fase 0. Se actualiza `system_prompt.md` a v1.3. | 2026-10-27 |
 
 ---
 

@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Versión** | 1.2 (2026-10-26: auditoría del paso 7, D-069 a D-082; D-083 y D-084) |
+| **Versión** | 1.3 (2026-10-27: auditoría del paso 7, D-069 a D-082; D-083 y D-084; mensaje de pedido sin líneas, D-110) |
 | **Fecha** | 2026-10-26 |
 | **Fuentes** | `docs/propuesta.md` · `CLAUDE.md` · `docs/requirements.md` v1.9 · `docs/data-contract.json` v1.2 · `docs/wireframe.md` v1.3 |
 

@@ -1,6 +1,6 @@
 # system_prompt.md — Reglas de contexto para agentes de IA
 
-> Proyecto **Panadería Efrata** · Requisito del curso RC-03 · Versión 1.2 (2026-10-26: auditoría del paso 7, D-081) · 2026-10-26
+> Proyecto **Panadería Efrata** · Requisito del curso RC-03 · Versión 1.3 (2026-10-27: comentarios en español, D-120) · 2026-10-27
 > Estas reglas son **obligatorias** para cualquier agente de IA que lea, genere o modifique código o documentación en este repositorio.
 > Completadas en el paso 5 con la estructura de módulos y las convenciones de archivos de `docs/design.md` §4 (D-013, D-061).
 
@@ -35,7 +35,8 @@ Cualquier dependencia nueva requiere una decisión registrada en `CLAUDE.md` §9
 ## 3. Convenciones de código
 
 - **Idioma:**
-  - Código, nombres, comentarios técnicos y contrato de datos en **inglés**.
+  - Código, nombres y contrato de datos en **inglés**.
+  - Comentarios técnicos en **español**, igual que la documentación (D-120).
   - Textos visibles para el usuario en **español**.
 - **Nombres:**
   - Entidades en `PascalCase`.
