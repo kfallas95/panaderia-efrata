@@ -258,19 +258,19 @@ Al cerrar la fase debe quedar **una** venta de 5 panes el 2 nov, con existencia 
 
 ## Fase 8 — Pedidos
 
-- [ ] **T-8.1** `orderService.create`, `update` y `delete` (REQ-F-15, REQ-F-16):
+- [x] **T-8.1** `orderService.create`, `update` y `delete` (REQ-F-15, REQ-F-16):
   - `createdAt`.
   - Líneas de catálogo y personalizadas.
   - Apartado.
   - Teléfono (REQ-F-24) y adelanto ≤ total (REQ-F-27).
   - Entrega hoy o futura solo al crear o cambiarla (D-073).
   - Sin líneas: "Agrega al menos un producto" (D-110).
-- [ ] **T-8.2** `OrdersScreen`:
+- [x] **T-8.2** `OrdersScreen`:
   - Pestañas Pendientes, Entregados y Cancelados (D-047, D-071); textos vacíos de D-111.
   - `OrderCard` con total, adelanto, saldo, "Faltan X {producto} por producir" (dorado) y "Atrasado" (rojo) (REQ-F-26).
-- [ ] **T-8.3** `OrderForm` y `OrderDetail` (wireframe §2 y §3). En esta fase el detalle muestra solo Editar y Eliminar; Entregar y Cancelar llegan en la Fase 9 (D-111).
-- [ ] **T-8.4** Re-render cada 60 s con la app visible y al volver a la pestaña (D-062, design §5.3).
-- [ ] **T-8.5** Bloquear desactivar o eliminar productos en pedidos pendientes (REQ-F-02, D-074).
+- [x] **T-8.3** `OrderForm` y `OrderDetail` (wireframe §2 y §3). En esta fase el detalle muestra solo Editar y Eliminar; Entregar y Cancelar llegan en la Fase 9 (D-111).
+- [x] **T-8.4** Re-render cada 60 s con la app visible y al volver a la pestaña (D-062, design §5.3).
+- [x] **T-8.5** Bloquear desactivar o eliminar productos en pedidos pendientes (REQ-F-02, D-074).
 
 **Cubre:** REQ-F-15, REQ-F-16, REQ-F-24, REQ-F-26, REQ-F-27.
 
@@ -304,6 +304,7 @@ Al cerrar la fase debe quedar **una** venta de 5 panes el 2 nov, con existencia 
   - Crea la venta con la fecha real, incluidos los `customItems`.
   - Guarda `closedAt` en la misma transacción que la venta.
 - [ ] **T-9.2** `orderService.cancel`: libera lo apartado, guarda la nota opcional y `closedAt` (REQ-F-18).
+  - Confirmaciones de entregar y cancelar, y detalle de pedidos cerrados, según D-114.
 - [ ] **T-9.3** Pedidos entregados y cancelados de solo lectura (REQ-F-16, D-071). Una venta de pedido solo permite editar la fecha (REQ-F-13, D-072).
 - [ ] **T-9.4** Eliminar la venta de un pedido: el pedido vuelve a Pendiente y `closedAt` queda en null, en la misma transacción (REQ-F-14, D-021). Aviso "El pedido de {cliente} volverá a Pendiente".
 

@@ -1,5 +1,5 @@
 // Nueva / editar venta (wireframe §5). REQ-F-12 a REQ-F-14, REQ-F-20 a REQ-F-23, REQ-F-28 ·
-// INV-13 · D-031, D-069, D-106, D-107.
+// INV-13 · D-031, D-069, D-072, D-106, D-107, D-114.
 
 import { h } from '../../dom.js';
 import { FieldError } from '../../components/fieldError.js';
@@ -22,6 +22,9 @@ export function renderSaleForm(container, { id = null }, ctx) {
     return;
   }
   const today = ctx.clock.today();
+  // Venta de un pedido entregado: líneas bloqueadas, solo se edita la fecha (D-072, D-114).
+  const order = sale?.orderId ? data.orders.find((o) => o.id === sale.orderId) : null;
+  const locked = Boolean(sale?.orderId);
   const previousIds = new Set((sale?.items ?? []).map((i) => i.productId));
   const products = data.products
     .filter((p) => p.isActive || previousIds.has(p.id))
@@ -35,6 +38,10 @@ export function renderSaleForm(container, { id = null }, ctx) {
   const lines = [];
 
   const updateTotal = () => {
+    if (locked) {
+      totalText.textContent = formatMoney(selectSaleTotal(sale));
+      return;
+    }
     const total = lines.reduce((sum, line) => {
       const q = parseProductQuantity(line.quantity.element.value);
       const p = parseMoney(line.price.element.value);
@@ -54,7 +61,8 @@ export function renderSaleForm(container, { id = null }, ctx) {
     const productField = FieldError({ label: 'Producto', control: select });
     const quantityField = FieldError({ label: 'Cantidad', control: quantity.element });
     const priceField = FieldError({ label: 'Precio (₡)', control: price.element });
-    const removeButton = h('button', { type: 'button', class: 'btn btn-small', 'aria-label': 'Quitar producto', text: '✕' });
+    const removeButton = locked ? null : h('button', { type: 'button', class: 'btn btn-small', 'aria-label': 'Quitar producto', text: '✕' });
+    if (locked) [select, quantity.element, price.element].forEach((control) => { control.disabled = true; });
 
     const line = { select, quantity, price, productField, quantityField, priceField };
     const showAvailable = () => {
@@ -76,7 +84,7 @@ export function renderSaleForm(container, { id = null }, ctx) {
       available,
       h('div', { class: 'field-pair' }, quantityField.element, priceField.element),
     );
-    removeButton.addEventListener('click', () => {
+    removeButton?.addEventListener('click', () => {
       lines.splice(lines.indexOf(line), 1);
       element.remove();
       updateTotal();
@@ -84,18 +92,33 @@ export function renderSaleForm(container, { id = null }, ctx) {
     line.element = element;
     lines.push(line);
     linesBox.append(element);
-    showAvailable();
+    if (!locked) showAvailable();
+  }
+
+  /** Artículo personalizado de una venta de pedido: solo lectura (INV-15, D-114). */
+  function addCustomLine(item) {
+    const controls = [
+      FieldError({ label: 'Descripción', control: h('input', { type: 'text', value: item.description, disabled: true }) }),
+      FieldError({ label: 'Cantidad', control: QuantityInput({ kind: 'product', value: item.quantity }).element }),
+      FieldError({ label: 'Precio (₡)', control: MoneyInput({ value: item.unitPrice }).element }),
+    ];
+    controls.forEach((field) => { field.control.disabled = true; });
+    linesBox.append(h('div', { class: 'card line' },
+      controls[0].element,
+      h('div', { class: 'field-pair' }, controls[1].element, controls[2].element)));
   }
 
   (sale?.items ?? []).forEach((item) => addLine(item));
-  if (lines.length === 0) addLine();
+  if (locked) (sale.customItems ?? []).forEach((item) => addCustomLine(item));
+  if (lines.length === 0 && !locked) addLine();
   updateTotal();
 
   const addButton = h('button', { type: 'button', class: 'btn', text: '+ Producto' });
   addButton.addEventListener('click', () => addLine());
 
   const form = h('form', { class: 'form', novalidate: true },
-    date.element, linesBox, addButton,
+    order ? h('p', { class: 'tag', text: `Pedido de ${order.customerName}` }) : null,
+    date.element, linesBox, locked ? null : addButton,
     h('p', { class: 'form-total' }, 'Total ', totalText),
     message.element, SubmitButton());
   form.addEventListener('submit', async (event) => {
@@ -121,7 +144,6 @@ export function renderSaleForm(container, { id = null }, ctx) {
   if (sale) {
     const remove = h('button', { type: 'button', class: 'btn btn-danger-outline btn-block', text: 'Eliminar venta' });
     remove.addEventListener('click', async () => {
-      const order = sale.orderId ? data.orders.find((o) => o.id === sale.orderId) : null;
       const text = `¿Eliminar la venta de ${formatMoney(selectSaleTotal(sale))} del ${formatDayMonth(sale.date)}?`
         + (order ? ` El pedido de ${order.customerName} volverá a Pendiente` : '');
       if (!(await confirmDialog({ message: text, confirmLabel: 'Eliminar', danger: true }))) return;

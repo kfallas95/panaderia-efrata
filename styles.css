@@ -786,3 +786,26 @@ textarea {
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   }
 }
+
+/* ---------- Fase 9: entrega y cancelación ---------- */
+
+.deliver-zone {
+  max-width: 520px;
+  margin-top: var(--space-4);
+}
+
+.deliver-zone .form-message {
+  margin: var(--space-2) 0 0;
+  white-space: pre-line;
+}
+
+.confirm-dialog .field {
+  margin: var(--space-3) 0;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background: var(--color-cream);
+  color: var(--color-muted);
+}

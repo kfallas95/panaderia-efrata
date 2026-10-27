@@ -1,5 +1,5 @@
 // Servicio de ventas (T-7.1). REQ-F-12 a REQ-F-14, REQ-F-22, REQ-F-23 · INV-12, INV-13 ·
-// D-016, D-017, D-031, D-069, D-080, D-106, D-107.
+// D-016, D-017, D-021, D-031, D-056, D-069, D-072, D-080, D-106, D-107.
 
 import { MSG } from '../domain/messages.js';
 import { parseMoney } from '../domain/money.js';
@@ -12,13 +12,14 @@ import {
   validateNotFutureDate,
   checkSaleStock,
 } from '../domain/validators.js';
+import { OrderStatus } from '../domain/types.js';
 import { upsertEntity, removeEntity } from '../state/store.js';
 import { success, failure } from './result.js';
 
 /**
  * @param {{ store, repositories, clock, idGenerator }} deps
  */
-export function createSaleService({ store, repositories, clock, idGenerator }) {
+export function createSaleService({ store, repositories, runner, clock, idGenerator }) {
   const data = () => store.getState().data;
   const productById = (id) => data().products.find((p) => p.id === id) ?? null;
 
@@ -37,6 +38,19 @@ export function createSaleService({ store, repositories, clock, idGenerator }) {
       else {
         const dateError = validateNotFutureDate(date, clock.today());
         if (dateError) errors.date = dateError;
+      }
+
+      // Venta generada por un pedido entregado: solo se cambia la fecha (REQ-F-13, D-072).
+      if (existing?.orderId) {
+        if (errors.date) return failure(errors);
+        const updated = { ...existing, date };
+        try {
+          await repositories.sales.put(updated);
+        } catch {
+          return failure({ form: MSG.SAVE_FAILED });
+        }
+        store.setState((state) => upsertEntity(state, 'sales', updated));
+        return success(updated);
       }
 
       const items = [];
@@ -100,14 +114,31 @@ export function createSaleService({ store, repositories, clock, idGenerator }) {
       return success(sale);
     },
 
-    /** Elimina una venta; sus unidades vuelven a la existencia (REQ-F-14, D-017). */
+    /**
+     * Elimina una venta; sus unidades vuelven a la existencia (REQ-F-14, D-017).
+     * Si la generó un pedido, el pedido vuelve a Pendiente en la misma transacción (D-021, D-056).
+     */
     async remove(id) {
+      const sale = data().sales.find((s) => s.id === id);
+      if (!sale) return failure({ form: MSG.SAVE_FAILED });
+      const order = sale.orderId ? data().orders.find((o) => o.id === sale.orderId) : null;
+      const reopened = order ? { ...order, status: OrderStatus.PENDING, closedAt: null, saleId: null } : null;
       try {
-        await repositories.sales.delete(id);
+        if (reopened) {
+          await runner.run(['sales', 'orders'], async (tx) => {
+            await repositories.sales.delete(id, tx);
+            await repositories.orders.put(reopened, tx);
+          });
+        } else {
+          await repositories.sales.delete(id);
+        }
       } catch {
         return failure({ form: MSG.SAVE_FAILED });
       }
-      store.setState((state) => removeEntity(state, 'sales', id));
+      store.setState((state) => {
+        const next = removeEntity(state, 'sales', id);
+        return reopened ? upsertEntity(next, 'orders', reopened) : next;
+      });
       return success();
     },
   };

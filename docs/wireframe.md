@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Versión** | 1.4 (2026-10-26: mensaje de entrega por D-066; auditoría del paso 7, D-069 a D-082; D-083 y D-084; D-110 y D-111) |
+| **Versión** | 1.5 (2026-10-27: mensaje de entrega por D-066; auditoría del paso 7, D-069 a D-082; D-083 y D-084; D-110 y D-111; D-114) |
 | **Fecha** | 2026-10-26 |
 | **Fuentes** | `CLAUDE.md` §6 y §7 (D-014, D-046 a D-084) · `docs/requirements.md` v1.9 · `docs/data-contract.json` v1.2 |
 
@@ -90,10 +90,11 @@
 └────────────────────────────────────────┘
 ```
 
-- **Entregar** (REQ-F-17): crea la venta con la fecha real. Si al pedido le faltan unidades, muestra el bloqueo de la sección 11.
-- **Cancelar** (REQ-F-18): pide una nota opcional sobre el adelanto y libera lo apartado.
+- **Entregar** (REQ-F-17): pide confirmación "¿Marcar como entregado el pedido de María Rojas? Se registrará una venta de ₡30 000,00" y crea la venta con la fecha real. Si al pedido le faltan unidades, muestra el bloqueo de la sección 11 en rojo debajo del botón (D-114).
+- **Cancelar** (REQ-F-18): abre "¿Cancelar el pedido de María Rojas?" con el campo "Nota sobre el adelanto (opcional)" y los botones (Volver) (Cancelar pedido); libera lo apartado (D-114).
+- Después de entregar o cancelar se queda en el detalle (D-114).
 - **Eliminar** (REQ-F-16): pide confirmación con el texto "¿Eliminar el pedido de María Rojas?".
-- **Pedidos Entregados o Cancelados:** el detalle es solo de lectura y no muestra botones (D-071). Para deshacer una entrega se elimina la venta desde Ventas.
+- **Pedidos Entregados o Cancelados:** el detalle es solo de lectura y no muestra botones (D-071). Muestra "Entregado el 7 nov · 14:00" o "Cancelado el 7 nov · 14:00" y, en los cancelados, la nota si la hay (D-114). Para deshacer una entrega se elimina la venta desde Ventas.
 
 ## 3. Nuevo / editar pedido
 
@@ -176,7 +177,7 @@
 
 - Si una línea no alcanza, **no se guarda nada** (D-031) y los datos ingresados se conservan.
 - Si se agrega un producto que ya está en la venta, se suma a su línea (D-069).
-- **Venta que viene de un pedido:** solo se puede cambiar la fecha; las líneas aparecen bloqueadas (D-072).
+- **Venta que viene de un pedido:** solo se puede cambiar la fecha; las líneas y los artículos personalizados aparecen bloqueados (D-072, D-114).
 - **Sin productos:** "Agrega al menos un producto" (D-106).
 - **Eliminar venta:** botón al final del formulario; "¿Eliminar la venta de ₡7 500,00 del 2 nov?" (D-107).
 

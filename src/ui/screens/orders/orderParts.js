@@ -4,7 +4,7 @@
 import { h } from '../../dom.js';
 import { MoneyText } from '../../components/moneyText.js';
 import { missingInOrder } from '../../../domain/messages.js';
-import { formatWeekdayDayMonth } from '../../../domain/dates.js';
+import { formatWeekdayDayMonth, formatDayMonth } from '../../../domain/dates.js';
 import { formatPhone } from '../../../domain/validators.js';
 
 /** "María Rojas · 8888-0000". */
@@ -13,6 +13,10 @@ export const customerLine = (order) => `${order.customerName} · ${formatPhone(o
 /** "Entrega: sáb 7 nov · 15:00". */
 export const deliveryLine = (order) =>
   `Entrega: ${formatWeekdayDayMonth(order.deliveryDate)} · ${order.deliveryTime}`;
+
+/** "Entregado el 7 nov · 14:00" o "Cancelado el 7 nov · 14:00" a partir de closedAt (D-114). */
+export const closedLine = (label, closedAt) =>
+  `${label} el ${formatDayMonth(closedAt.slice(0, 10))} · ${closedAt.slice(11, 16)}`;
 
 /** Etiqueta roja "Atrasado" (REQ-F-26). */
 export function OverdueTag() {

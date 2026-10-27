@@ -1,16 +1,18 @@
-// Servicio de pedidos (T-8.1). REQ-F-15, REQ-F-16, REQ-F-20 a REQ-F-24, REQ-F-27 ·
-// INV-06, INV-13 a INV-15, INV-27 · D-026, D-043, D-053, D-069, D-073, D-110.
+// Servicio de pedidos (T-8.1, T-9.1, T-9.2). REQ-F-15 a REQ-F-18, REQ-F-20 a REQ-F-24, REQ-F-27 ·
+// INV-06, INV-13 a INV-18, INV-27 · D-026, D-029, D-043, D-053, D-056, D-063, D-066, D-069, D-071, D-073, D-110.
 //
 // Un pedido aparta sus productos aunque la existencia no alcance (REQ-F-15):
 // aquí no se valida existencia. Lo que falta se calcula con la asignación por
 // prioridad (selectAllocation) y se muestra en la tarjeta y el detalle.
 
-import { MSG } from '../domain/messages.js';
+import { MSG, missingForDelivery } from '../domain/messages.js';
 import { parseMoney } from '../domain/money.js';
 import { parseProductQuantity } from '../domain/quantity.js';
 import { isValidDate, isValidTime } from '../domain/dates.js';
 import { orderTotal } from '../domain/totals.js';
 import { OrderStatus } from '../domain/types.js';
+import { stockOnHand } from '../domain/stock.js';
+import { allocateStock, orderShortfalls } from '../domain/orderAllocation.js';
 import {
   isBlank,
   validatePositive,
@@ -38,7 +40,7 @@ function readAmounts(line, prefix, errors) {
 /**
  * @param {{ store, repositories, clock, idGenerator }} deps
  */
-export function createOrderService({ store, repositories, clock, idGenerator }) {
+export function createOrderService({ store, repositories, runner, clock, idGenerator }) {
   const data = () => store.getState().data;
   const find = (id) => data().orders.find((o) => o.id === id) ?? null;
   const productById = (id) => data().products.find((p) => p.id === id) ?? null;
@@ -163,6 +165,70 @@ export function createOrderService({ store, repositories, clock, idGenerator }) 
       }
       store.setState((state) => removeEntity(state, 'orders', id));
       return success();
+    },
+
+    /**
+     * Faltantes del pedido ahora, según la prioridad (REQ-F-15, D-063).
+     * @returns {string[]} "Faltan X {producto} por producir para este pedido", uno por producto
+     */
+    deliveryBlockers(id) {
+      const current = data();
+      const allocation = allocateStock(current.orders, (productId) => stockOnHand(productId, current), clock.nowParts());
+      return orderShortfalls(id, allocation)
+        .map((s) => missingForDelivery(s.missing, productById(s.productId)?.name ?? ''));
+    },
+
+    /**
+     * Entrega un pedido: crea la venta con la fecha real (D-029), descuenta la existencia,
+     * libera lo apartado y guarda closedAt, todo en una sola transacción (REQ-F-17, D-056).
+     * Si al pedido le faltan unidades, se bloquea y sigue Pendiente (D-063, D-066).
+     */
+    async deliver(id) {
+      const order = find(id);
+      if (!order || order.status !== OrderStatus.PENDING) return failure({ form: MSG.SAVE_FAILED });
+      const blockers = this.deliveryBlockers(id);
+      if (blockers.length) return failure({ form: blockers.join('\n') });
+
+      const sale = {
+        id: idGenerator.newId(),
+        date: clock.today(),
+        items: order.items.map((i) => ({ ...i })),
+        customItems: order.customItems.map((c) => ({ ...c })),
+        orderId: order.id,
+      };
+      const delivered = { ...order, status: OrderStatus.DELIVERED, closedAt: clock.nowIso(), saleId: sale.id };
+      try {
+        await runner.run(['sales', 'orders'], async (tx) => {
+          await repositories.sales.put(sale, tx);
+          await repositories.orders.put(delivered, tx);
+        });
+      } catch {
+        return failure({ form: MSG.SAVE_FAILED });
+      }
+      store.setState((state) => upsertEntity(upsertEntity(state, 'sales', sale), 'orders', delivered));
+      return success({ order: delivered, sale });
+    },
+
+    /**
+     * Cancela un pedido: libera lo apartado y guarda la nota opcional sobre el adelanto
+     * y closedAt. No crea venta ni cambia la existencia (REQ-F-18, INV-17, INV-18).
+     */
+    async cancel(id, note) {
+      const order = find(id);
+      if (!order || order.status !== OrderStatus.PENDING) return failure({ form: MSG.SAVE_FAILED });
+      const cancelled = {
+        ...order,
+        status: OrderStatus.CANCELLED,
+        closedAt: clock.nowIso(),
+        cancellationNote: isBlank(note) ? null : note.trim(),
+      };
+      try {
+        await repositories.orders.put(cancelled);
+      } catch {
+        return failure({ form: MSG.SAVE_FAILED });
+      }
+      store.setState((state) => upsertEntity(state, 'orders', cancelled));
+      return success(cancelled);
     },
   };
 }
