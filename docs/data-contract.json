@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://panaderia-efrata.local/docs/data-contract.json",
+  "title": "Panadería Efrata — Contrato de datos",
+  "description": "Versión 1.2 (2026-10-26: Order.createdAt por D-053; Order.closedAt por D-071; insumos en milésimas enteras por D-075). Las cantidades de insumo se guardan en milésimas enteras: 2500 = 2,5 kg. Persistencia en IndexedDB (D-004), una colección (object store) por entidad raíz; SaleItem y OrderItem viven dentro de Sale y Order. Montos en colones como céntimos enteros (D-025): 125050 = ₡1 250,50. Valores derivados que NO se guardan: existencia, apartado y disponible para vender de cada producto; cantidad actual de cada insumo; totales de venta y pedido; saldo del pedido; total vendido, gastos y ganancia del reporte (D-036).",
+
+  "$defs": {
+    "uuid": { "type": "string", "format": "uuid" },
+    "date": { "type": "string", "format": "date", "description": "YYYY-MM-DD, fecha local." },
+    "time": { "type": "string", "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$", "description": "HH:MM, 24 horas." },
+    "dateTime": { "type": "string", "format": "date-time", "description": "Fecha y hora local con zona (ISO 8601)." },
+    "nonEmptyString": { "type": "string", "minLength": 1, "pattern": "\\S", "description": "Se rechazan vacíos y solo espacios (INV-02, REQ-F-20)." },
+    "positiveAmount": { "type": "integer", "exclusiveMinimum": 0, "description": "Céntimos de colón > 0 (INV-03, D-025)." },
+    "productQuantity": { "type": "integer", "minimum": 1, "description": "Unidades enteras de producto > 0 (D-038)." },
+    "supplyQuantity": { "type": "integer", "exclusiveMinimum": 0, "description": "Cantidad de insumo > 0 en milésimas enteras de su unidad: 2500 = 2,5 kg (D-038, D-045, D-075)." },
+    "supplyCountQuantity": { "type": "integer", "minimum": 0, "description": "Conteo físico en milésimas enteras; admite 0 (INV-03, D-075)." },
+
+    "SupplyUnit": { "type": "string", "enum": ["KG", "G", "L", "ML", "UNIT"], "description": "Lista fija (D-039). Etiquetas UI: kg, g, L, ml, unidad." },
+    "ExpenseCategory": { "type": "string", "enum": ["SUPPLIES", "SERVICES"], "description": "UI: Insumos, Servicios." },
+    "OrderStatus": { "type": "string", "enum": ["PENDING", "DELIVERED", "CANCELLED"], "description": "UI: Pendiente, Entregado, Cancelado." },
+    "StockOutReason": { "type": "string", "enum": ["REUSED", "GIVEN_AWAY"], "description": "UI: Reutilizado, Regalado (D-020)." },
+
+    "Product": {
+      "type": "object",
+      "description": "Producto del catálogo (REQ-F-01, REQ-F-02). Nombre único sin distinguir mayúsculas ni espacios extra (D-034); se valida en el dominio.",
+      "additionalProperties": false,
+      "required": ["id", "name", "price", "isActive"],
+      "properties": {
+        "id": { "$ref": "#/$defs/uuid" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "price": { "$ref": "#/$defs/positiveAmount" },
+        "isActive": { "type": "boolean", "description": "false = desactivado por tener historial (D-023)." }
+      }
+    },
+
+    "Supply": {
+      "type": "object",
+      "description": "Insumo (REQ-F-07). La cantidad actual no se guarda: es el newQuantity del último StockCount + Σ compras (Expense SUPPLIES) con fecha y hora (al minuto) estrictamente posteriores a ese conteo (D-075); sin conteos, Σ de todas sus compras (D-036, D-037, D-041).",
+      "additionalProperties": false,
+      "required": ["id", "name", "unit", "isActive"],
+      "properties": {
+        "id": { "$ref": "#/$defs/uuid" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "unit": { "$ref": "#/$defs/SupplyUnit" },
+        "isActive": { "type": "boolean" }
+      }
+    },
+
+    "Production": {
+      "type": "object",
+      "description": "Unidades producidas (REQ-F-03). Suma a la existencia del producto.",
+      "additionalProperties": false,
+      "required": ["id", "productId", "quantity", "date"],
+      "properties": {
+        "id": { "$ref": "#/$defs/uuid" },
+        "productId": { "$ref": "#/$defs/uuid", "description": "→ Product.id" },
+        "quantity": { "$ref": "#/$defs/productQuantity" },
+        "date": { "$ref": "#/$defs/date", "description": "Pasada o de hoy (INV-26)." }
+      }
+    },
+
+    "StockOut": {
+      "type": "object",
+      "description": "Salida de productos no vendidos (REQ-F-05). Resta existencia; no es venta ni gasto.",
+      "additionalProperties": false,
+      "required": ["id", "productId", "quantity", "reason", "date"],
+      "properties": {
+        "id": { "$ref": "#/$defs/uuid" },
+        "productId": { "$ref": "#/$defs/uuid", "description": "→ Product.id" },
+        "quantity": { "$ref": "#/$defs/productQuantity" },
+        "reason": { "$ref": "#/$defs/StockOutReason" },
+        "date": { "$ref": "#/$defs/date", "description": "Pasada o de hoy (INV-26)." }
+      }
+    },
+
+    "StockCount": {
+      "type": "object",
+      "description": "Conteo físico de un insumo (REQ-F-08). No se edita ni se elimina (INV-23).",
+      "additionalProperties": false,
+      "required": ["id", "supplyId", "countedAt", "previousQuantity", "newQuantity"],
+      "properties": {
+        "id": { "$ref": "#/$defs/uuid" },
+        "supplyId": { "$ref": "#/$defs/uuid", "description": "→ Supply.id" },
+        "countedAt": { "$ref": "#/$defs/dateTime", "description": "Fecha y hora del conteo (D-041)." },
+        "previousQuantity": { "$ref": "#/$defs/supplyCountQuantity", "description": "Cantidad calculada justo antes del conteo (D-024)." },
+        "newQuantity": { "$ref": "#/$defs/supplyCountQuantity" }
+      }
+    },
+
+    "Expense": {
+      "type": "object",
+      "description": "Gasto (REQ-F-09 a REQ-F-11). SUPPLIES exige supplyId y quantity; SERVICES no los lleva.",
+      "additionalProperties": false,
+      "required": ["id", "category", "date", "time", "amount", "description"],
+      "properties": {
+        "id": { "$ref": "#/$defs/uuid" },
+        "category": { "$ref": "#/$defs/ExpenseCategory" },
+        "date": { "$ref": "#/$defs/date", "description": "Pasada o de hoy (INV-26)." },
+        "time": { "$ref": "#/$defs/time", "description": "Hora de la compra; por defecto la actual. Decide si la compra suma después de un conteo (D-041)." },
+        "amount": { "$ref": "#/$defs/positiveAmount" },
+        "description": { "$ref": "#/$defs/nonEmptyString", "description": "Obligatoria en ambas categorías (D-040)." },
+        "supplyId": { "$ref": "#/$defs/uuid", "description": "→ Supply.id. Solo SUPPLIES." },
+        "quantity": { "$ref": "#/$defs/supplyQuantity", "description": "Solo SUPPLIES, en la unidad del insumo." }
+      },
+      "if": { "properties": { "category": { "const": "SUPPLIES" } } },
+      "then": { "required": ["supplyId", "quantity"] },
+      "else": { "not": { "anyOf": [{ "required": ["supplyId"] }, { "required": ["quantity"] }] } }
+    },
+
+    "SaleItem": {
+      "type": "object",
+      "description": "Línea de una venta (D-016, D-019).",
+      "additionalProperties": false,
+      "required": ["productId", "quantity", "unitPrice"],
+      "properties": {
+        "productId": { "$ref": "#/$defs/uuid", "description": "→ Product.id" },
+        "quantity": { "$ref": "#/$defs/productQuantity" },
+        "unitPrice": { "$ref": "#/$defs/positiveAmount", "description": "Copiado de Product.price; editable en la línea (INV-13)." }
+      }
+    },
+
+    "Sale": {
+      "type": "object",
+      "description": "Venta (REQ-F-12 a REQ-F-14). Total = Σ quantity × unitPrice (derivado). Las líneas de catálogo de un pedido entregado se copian como SaleItem; los artículos personalizados entran en customItems.",
+      "additionalProperties": false,
+      "required": ["id", "date", "items", "orderId"],
+      "properties": {
+        "id": { "$ref": "#/$defs/uuid" },
+        "date": { "$ref": "#/$defs/date", "description": "Pasada o de hoy (INV-26). Si viene de un pedido: fecha real en que se marcó Entregado (D-029)." },
+        "items": { "type": "array", "items": { "$ref": "#/$defs/SaleItem" }, "description": "Una venta normal tiene al menos una línea. Un producto aparece una sola vez por venta; si se repite, se suma a la misma línea (D-069)." },
+        "customItems": { "type": "array", "items": { "$ref": "#/$defs/CustomOrderItem" }, "description": "Solo en ventas generadas por un pedido; no afectan inventario (INV-15)." },
+        "orderId": { "oneOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }], "description": "→ Order.id si la generó un pedido entregado; si no, null." }
+      }
+    },
+
+    "CatalogOrderItem": {
+      "type": "object",
+      "description": "Línea de pedido con producto del catálogo. Aparta unidades (INV-14). Un producto aparece una sola vez por pedido (INV-06).",
+      "additionalProperties": false,
+      "required": ["productId", "quantity", "unitPrice"],
+      "properties": {
+        "productId": { "$ref": "#/$defs/uuid", "description": "→ Product.id" },
+        "quantity": { "$ref": "#/$defs/productQuantity" },
+        "unitPrice": { "$ref": "#/$defs/positiveAmount" }
+      }
+    },
+
+    "CustomOrderItem": {
+      "type": "object",
+      "description": "Artículo personalizado (INV-15). No pasa por inventario.",
+      "additionalProperties": false,
+      "required": ["description", "quantity", "unitPrice"],
+      "properties": {
+        "description": { "$ref": "#/$defs/nonEmptyString" },
+        "quantity": { "$ref": "#/$defs/productQuantity", "description": "D-042." },
+        "unitPrice": { "$ref": "#/$defs/positiveAmount" }
+      }
+    },
+
+    "Order": {
+      "type": "object",
+      "description": "Pedido de un cliente (REQ-F-15 a REQ-F-18). Total = Σ líneas (derivado); saldo = total − adelanto (derivado). Debe tener al menos una línea entre items y customItems.",
+      "additionalProperties": false,
+      "required": ["id", "createdAt", "closedAt", "customerName", "customerPhone", "deliveryDate", "deliveryTime", "notes", "advanceAmount", "status", "items", "customItems", "cancellationNote", "saleId"],
+      "properties": {
+        "id": { "$ref": "#/$defs/uuid" },
+        "createdAt": { "$ref": "#/$defs/dateTime", "description": "Momento en que se registró el pedido; desempata la asignación de existencias cuando dos pedidos tienen la misma entrega (D-053)." },
+        "customerName": { "$ref": "#/$defs/nonEmptyString" },
+        "customerPhone": { "type": "string", "pattern": "^[0-9]{8}$", "description": "Obligatorio (D-026). 8 dígitos de Costa Rica, guardados sin guion; la UI acepta y muestra 8888-0000 (D-044)." },
+        "deliveryDate": { "$ref": "#/$defs/date", "description": "Hoy o futura al crear el pedido o al cambiar la fecha u hora de entrega de uno PENDING (INV-27, D-073)." },
+        "deliveryTime": { "$ref": "#/$defs/time" },
+        "notes": { "type": ["string", "null"], "description": "Opcional (D-026)." },
+        "advanceAmount": { "oneOf": [{ "$ref": "#/$defs/positiveAmount" }, { "type": "null" }], "description": "Opcional (D-026); si se ingresa, > 0 y ≤ total del pedido (D-043). Solo se anota (INV-17)." },
+        "status": { "$ref": "#/$defs/OrderStatus" },
+        "items": { "type": "array", "items": { "$ref": "#/$defs/CatalogOrderItem" } },
+        "customItems": { "type": "array", "items": { "$ref": "#/$defs/CustomOrderItem" } },
+        "cancellationNote": { "type": ["string", "null"], "description": "Opcional; solo CANCELLED: qué pasó con el adelanto (INV-18, D-076)." },
+        "closedAt": { "oneOf": [{ "$ref": "#/$defs/dateTime" }, { "type": "null" }], "description": "Momento en que pasó a DELIVERED o CANCELLED; ordena esas pestañas. null si está PENDING (D-071)." },
+        "saleId": { "oneOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }], "description": "→ Sale.id cuando está DELIVERED; null en otros estados." }
+      }
+    }
+  },
+
+  "type": "object",
+  "description": "Contenido completo de la base IndexedDB (un object store por propiedad).",
+  "additionalProperties": false,
+  "properties": {
+    "products": { "type": "array", "items": { "$ref": "#/$defs/Product" } },
+    "supplies": { "type": "array", "items": { "$ref": "#/$defs/Supply" } },
+    "productions": { "type": "array", "items": { "$ref": "#/$defs/Production" } },
+    "stockOuts": { "type": "array", "items": { "$ref": "#/$defs/StockOut" } },
+    "stockCounts": { "type": "array", "items": { "$ref": "#/$defs/StockCount" } },
+    "expenses": { "type": "array", "items": { "$ref": "#/$defs/Expense" } },
+    "sales": { "type": "array", "items": { "$ref": "#/$defs/Sale" } },
+    "orders": { "type": "array", "items": { "$ref": "#/$defs/Order" } }
+  },
+
+  "examples": [
+    {
+      "products": [
+        { "id": "11111111-1111-4111-8111-111111111111", "name": "Pan casero", "price": 150000, "isActive": true }
+      ],
+      "supplies": [
+        { "id": "22222222-2222-4222-8222-222222222222", "name": "Harina", "unit": "KG", "isActive": true }
+      ],
+      "productions": [
+        { "id": "33333333-3333-4333-8333-333333333333", "productId": "11111111-1111-4111-8111-111111111111", "quantity": 20, "date": "2026-11-02" }
+      ],
+      "stockOuts": [
+        { "id": "44444444-4444-4444-8444-444444444444", "productId": "11111111-1111-4111-8111-111111111111", "quantity": 2, "reason": "GIVEN_AWAY", "date": "2026-11-02" }
+      ],
+      "stockCounts": [
+        { "id": "55555555-5555-4555-8555-555555555555", "supplyId": "22222222-2222-4222-8222-222222222222", "countedAt": "2026-11-01T18:00:00-06:00", "previousQuantity": 0, "newQuantity": 3500 }
+      ],
+      "expenses": [
+        { "id": "66666666-6666-4666-8666-666666666666", "category": "SUPPLIES", "date": "2026-11-02", "time": "09:30", "amount": 200000, "description": "Compra de harina", "supplyId": "22222222-2222-4222-8222-222222222222", "quantity": 2000 },
+        { "id": "77777777-7777-4777-8777-777777777777", "category": "SERVICES", "date": "2026-11-02", "time": "10:00", "amount": 1850050, "description": "Recibo de luz" }
+      ],
+      "sales": [
+        { "id": "88888888-8888-4888-8888-888888888888", "date": "2026-11-02", "items": [ { "productId": "11111111-1111-4111-8111-111111111111", "quantity": 5, "unitPrice": 150000 } ], "orderId": null }
+      ],
+      "orders": [
+        { "id": "99999999-9999-4999-8999-999999999999", "createdAt": "2026-11-01T16:20:00-06:00", "closedAt": null, "customerName": "María Rojas", "customerPhone": "88880000", "deliveryDate": "2026-11-07", "deliveryTime": "15:00", "notes": "Que diga Feliz cumpleaños", "advanceAmount": 1000000, "status": "PENDING", "items": [ { "productId": "11111111-1111-4111-8111-111111111111", "quantity": 10, "unitPrice": 150000 } ], "customItems": [ { "description": "Queque de chocolate personalizado", "quantity": 1, "unitPrice": 1500000 } ], "cancellationNote": null, "saleId": null }
+      ]
+    }
+  ]
+}
