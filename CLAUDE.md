@@ -31,7 +31,7 @@
 | `docs/data-contract.json` | Contrato de datos (JSON Schema) | ✅ v1.2 |
 | `docs/wireframe.md` | Wireframes | ✅ v1.6 |
 | `docs/design.md` | Arquitectura, módulos, estado y trazabilidad | ✅ v1.3 |
-| `docs/REFLECTION.md` | Reflexión del proyecto (reemplaza la retrospectiva del paso 6; D-068, D-086) | Al final del proyecto |
+| `docs/REFLECTION.md` | Reflexión del proyecto (reemplaza la retrospectiva del paso 6; D-068, D-086) | ✅ v1.0 (D-123) |
 | `docs/tasks.md` | Plan por fases con Unchanged Behavior | ✅ v1.1 |
 
 ---
@@ -341,6 +341,7 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-120 | Los comentarios técnicos del código van en **español**, igual que la documentación; el código, los nombres y el contrato de datos siguen en inglés (R6). Corrige la incongruencia detectada en la revisión de la Fase 11: `system_prompt.md` §3 pedía comentarios en inglés y el código los tiene en español desde la Fase 0. Se actualiza `system_prompt.md` a v1.3. | 2026-10-27 |
 | D-121 | Fase 11 verificada por el autor y aprobada (commit `Fase 11: cierre`). | 2026-10-27 |
 | D-122 | La app está publicada con GitHub Pages en https://kfallas95.github.io/panaderia-efrata/ (link dado por el autor). El README agrega la sección "Ver en línea", con la nota de que la versión publicada empieza sin datos, y un ejemplo de fecha simulada con ese link. | 2026-10-27 |
+| D-123 | Se aprueba `docs/REFLECTION.md` v1.0: matriz de alineación de intención y cuestionario de cierre del curso, con los niveles de satisfacción y las respuestas del autor (Muy Satisfecho en lógica de negocio, UI/UX y persistencia; 100% dueño del código). Cierra el proyecto. | 2026-10-27 |
 
 ---
 
