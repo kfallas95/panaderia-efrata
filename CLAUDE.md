@@ -311,6 +311,7 @@ Panadería Efrata                 (pantalla inicial: Pedidos)
 | D-090 | Pantallas vacías: croissant en Pedidos y Ventas; pan en Inventario y Gastos. Las ilustraciones son solo decorativas. | 2026-10-26 |
 | D-091 | Fase 0 verificada por el autor y aprobada (commit `Fase 0: esqueleto del proyecto`). | 2026-10-26 |
 | D-092 | Fase 1 verificada por el autor y aprobada (commit `Fase 1: dominio puro`; 63 casos comprobados). | 2026-10-26 |
+| D-093 | Fase 2 verificada por el autor y aprobada (commit `Fase 2: infraestructura`). Se agregan a `messages.js` los textos de almacenamiento de design §5 ("No se puede guardar información en este navegador", "No se pudo guardar. Intenta de nuevo."). | 2026-10-26 |
 
 ---
 

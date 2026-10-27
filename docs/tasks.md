@@ -91,14 +91,14 @@ El dominio no usa el DOM, IndexedDB, `new Date()` ni `crypto`; recibe `now` o `t
 
 ## Fase 2 — Infraestructura (`src/infrastructure/`)
 
-- [ ] **T-2.1** `db.js`: abrir `panaderiaEfrata` versión 1 y crear las 8 tablas con sus índices en `onupgradeneeded` (design §5.4, D-060).
+- [x] **T-2.1** `db.js`: abrir `panaderiaEfrata` versión 1 y crear las 8 tablas con sus índices en `onupgradeneeded` (design §5.4, D-060).
   - Si IndexedDB no está disponible: "No se puede guardar información en este navegador".
-- [ ] **T-2.2** `repositories.js`: `IndexedDbRepository` con `getAll`, `getById`, `add`, `put` y `delete`, todos asíncronos. `stockCounts` no expone `put` ni `delete` (INV-23).
-- [ ] **T-2.3** `transactionRunner.js`: `run(storeNames, fn)` en una sola transacción, todo o nada (D-056).
-- [ ] **T-2.4** `clock.js`: `SystemClock` con `now()` y `today()` en hora local.
+- [x] **T-2.2** `repositories.js`: `IndexedDbRepository` con `getAll`, `getById`, `add`, `put` y `delete`, todos asíncronos. `stockCounts` no expone `put` ni `delete` (INV-23).
+- [x] **T-2.3** `transactionRunner.js`: `run(storeNames, fn)` en una sola transacción, todo o nada (D-056).
+- [x] **T-2.4** `clock.js`: `SystemClock` con `now()` y `today()` en hora local.
   - Admite la fecha simulada `?today=…&time=…`, que avanza desde la hora indicada (D-057, D-079).
   - Es el único archivo que usa `new Date()` sin argumentos.
-- [ ] **T-2.5** `idGenerator.js`: `crypto.randomUUID()`.
+- [x] **T-2.5** `idGenerator.js`: `crypto.randomUUID()`.
 
 **Comportamiento sin cambios:**
 
